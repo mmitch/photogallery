@@ -1,9 +1,22 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.5 2007-06-23 21:21:15 mitch Exp $
+# $Id: photogallery.sh,v 1.6 2007-06-23 21:24:58 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL
+
+#
+# usage:
+#    photogallery.sh [gallerytitle]
+#
+# Run this script inside a directory with pictures.
+# It will generate a subfolder (set via $SUBDIR) with some thumbnails
+# and an HTML index file (set via $INDEX).
+# The gallery title is optional.
+# Already existing thumbnails will not be overwritten.  If you change
+# the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
+# tumbnail subfolder before you can run photogallery.sh again.
+#
 
 # TODOs
 # - link directories
@@ -33,7 +46,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.5 2007-06-23 21:21:15 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.6 2007-06-23 21:24:58 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
