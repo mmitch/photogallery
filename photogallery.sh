@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.6 2007-06-23 21:24:58 mitch Exp $
+# $Id: photogallery.sh,v 1.7 2007-06-23 21:30:52 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -19,7 +19,6 @@
 #
 
 # TODOs
-# - link directories
 # - generate output for direct use (no webserver): link to index.html instead of plain directories if applicable
 
 #### commandline parameters
@@ -42,11 +41,10 @@ html_head() {
     echo "<title>$TITLE</title>"
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\">"
     echo '</head><body>'
-    echo '<p><a href="..">up</a></p><hl>'
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.6 2007-06-23 21:24:58 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.7 2007-06-23 21:30:52 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -55,6 +53,21 @@ mkdir -p $SUBDIR
 exec > $INDEX
 
 html_head
+
+echo -n '<p><a href="..">up</a>'
+for DIR in *; do
+
+    [ -d "$DIR" ] || continue
+    [ -r "$DIR" ] || continue
+    [ "${DIR:0:1}" = '.' ] && continue
+
+    echo '<br>'
+    echo -n "<a href=\"$DIR\">$DIR</a>"
+
+    echo -n : 1>&2
+
+done
+echo '</p><hl>'
 
 for FILE in *; do
 
@@ -90,6 +103,7 @@ for FILE in *; do
 
     (
 	html_head
+	echo '<p><a href="..">up</a></p><hl>'
 	echo "<a href=\"../$FILE\" alt=\"$FILE\"><img src=\"$M_FILE\" /></a>"
 	html_foot
 	
