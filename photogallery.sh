@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.9 2007-06-23 21:48:04 mitch Exp $
+# $Id: photogallery.sh,v 1.10 2007-06-23 22:04:55 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -12,10 +12,26 @@
 # Run this script inside a directory with pictures.
 # It will generate a subfolder (set via $SUBDIR) with some thumbnails
 # and an HTML index file (set via $INDEX).
-# The gallery title is optional.
+# The gallery title is optional and defaults to the current directory.
+# 
 # Already existing thumbnails will not be overwritten.  If you change
 # the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
-# tumbnail subfolder before you can run photogallery.sh again.
+# thumbnail subfolder before you can run photogallery.sh again.
+#
+# To generate lots of galleries in subdirectories use this (only
+# works if there are no line breaks in your directory names):
+# 
+#   find . -depth \! -name .\* -type d | \
+#   while read DIR; do ( echo "$DIR"; cd "$DIR"; photogallery.sh ) ; done
+#
+# If you want to browse your galleries directly from your filesystem
+# without a webserver, you have to run this twice so that all links
+# are generated properly!
+#
+#
+# External commands needed:
+#    convert from Imagemagick
+#    dcraw (only if you want to convert RAW files)
 #
 
 #### commandline parameters
@@ -41,7 +57,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.9 2007-06-23 21:48:04 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.10 2007-06-23 22:04:55 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
