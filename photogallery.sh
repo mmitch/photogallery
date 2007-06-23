@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.8 2007-06-23 21:38:00 mitch Exp $
+# $Id: photogallery.sh,v 1.9 2007-06-23 21:48:04 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -18,12 +18,9 @@
 # tumbnail subfolder before you can run photogallery.sh again.
 #
 
-# TODOs
-# - generate output for direct use (no webserver): link to index.html instead of plain directories if applicable
-
 #### commandline parameters
 
-TITLE=${1:-photogallery}
+TITLE=${1:-${PWD##*/}}
 
 #### configuration
 
@@ -44,7 +41,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.8 2007-06-23 21:38:00 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.9 2007-06-23 21:48:04 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -54,7 +51,11 @@ exec > $INDEX
 
 html_head
 
-echo -n '<p><a href="..">up</a>'
+if [ -r "../$INDEX" ] ; then
+    echo -n "<p><a href=\"../$INDEX\">up</a>"
+else
+    echo -n '<p><a href="..">up</a>'
+fi
 for DIR in *; do
 
     [ -d "$DIR" ] || continue
@@ -62,7 +63,11 @@ for DIR in *; do
     [ "${DIR:0:1}" = '.' ] && continue
 
     echo '<br>'
-    echo -n "<a href=\"$DIR\">$DIR</a>"
+    if [ -r "$DIR/$INDEX" ] ; then
+	echo -n "<a href=\"$DIR/$INDEX\">$DIR</a>"
+    else
+	echo -n "<a href=\"$DIR\">$DIR</a>"
+    fi
 
     echo -n : 1>&2
 
@@ -106,7 +111,7 @@ for FILE in *; do
 
     (
 	html_head
-	echo '<p><a href="..">up</a></p><hl>'
+	echo '<p><a href="../$INDEX">up</a></p><hl>'
 	echo "<a href=\"../$FILE\" alt=\"$FILE\"><img src=\"$M_FILE\" /></a>"
 	html_foot
 	
