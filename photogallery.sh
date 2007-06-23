@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.4 2007-06-23 21:13:06 mitch Exp $
+# $Id: photogallery.sh,v 1.5 2007-06-23 21:21:15 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -7,7 +7,6 @@
 
 # TODOs
 # - link directories
-# - use proper charset encodings
 # - generate output for direct use (no webserver): link to index.html instead of plain directories if applicable
 
 #### commandline parameters
@@ -16,6 +15,8 @@ TITLE=${1:-photogallery}
 
 #### configuration
 
+CHARSET=UTF-8
+DATELANG=C
 MEDIUM=640x640
 SMALL=20%
 SUBDIR=.webthumbs
@@ -24,12 +25,15 @@ INDEX=index.html
 #### function declarations
 
 html_head() {
-    echo "<html><head><title>$TITLE</title></head><body>"
+    echo '<html><head>'
+    echo "<title>$TITLE</title>"
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\">"
+    echo '</head><body>'
     echo '<p><a href="..">up</a></p><hl>'
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(date)" 'by $Id: photogallery.sh,v 1.4 2007-06-23 21:13:06 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.5 2007-06-23 21:21:15 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
