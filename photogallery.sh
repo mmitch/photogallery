@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.15 2007-06-24 11:16:14 mitch Exp $
+# $Id: photogallery.sh,v 1.16 2007-06-24 20:31:04 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -58,7 +58,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.15 2007-06-24 11:16:14 mitch Exp $</i></small></p></body></html>'
+    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.16 2007-06-24 20:31:04 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -98,9 +98,9 @@ for FILE in *; do
     [ -r "$FILE" ] || continue
 
     EXT="${FILE/*.}"
-    M_INDEX="${FILE%.*}_m.html"
-    M_FILE="${FILE%.*}_m.jpg"
-    S_FILE="${FILE%.*}_s.jpg"
+    M_INDEX="${FILE}_m.html"
+    M_FILE="${FILE}_m.jpg"
+    S_FILE="${FILE}_s.jpg"
 
     if [ ! -s "$SUBDIR/$M_FILE" ] ; then
 	case "$EXT" in
