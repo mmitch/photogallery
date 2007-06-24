@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.10 2007-06-23 22:04:55 mitch Exp $
+# $Id: photogallery.sh,v 1.11 2007-06-24 09:53:58 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -57,7 +57,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.10 2007-06-23 22:04:55 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.11 2007-06-24 09:53:58 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -103,7 +103,7 @@ for FILE in *; do
     if [ ! -s "$SUBDIR/$M_FILE" ] ; then
 	case "$EXT" in
 	    
-	    gif|jpg|JPG|png|tif|tiff)
+	    gif|jpeg|jpg|JPG|png|tif|tiff)
 		convert -scale $MEDIUM "$FILE" "$SUBDIR/$M_FILE"
 		;;
 	    
