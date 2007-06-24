@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.12 2007-06-24 10:10:13 mitch Exp $
+# $Id: photogallery.sh,v 1.13 2007-06-24 10:15:19 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -57,12 +57,12 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.12 2007-06-24 10:10:13 mitch Exp $</i></small></p></body></html>'
+    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.13 2007-06-24 10:15:19 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
 
-mkdir -p $SUBDIR
+mkdir -p $SUBDIR || exit 1
 exec > $INDEX
 
 html_head
