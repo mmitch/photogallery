@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.13 2007-06-24 10:15:19 mitch Exp $
+# $Id: photogallery.sh,v 1.14 2007-06-24 10:57:01 lalufu Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -50,14 +50,15 @@ INDEX=index.html
 #### function declarations
 
 html_head() {
+    echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">'
     echo '<html><head>'
     echo "<title>$TITLE</title>"
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\">"
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\" />"
     echo '</head><body>'
 }
 
 html_foot() {
-    echo '<hl><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.13 2007-06-24 10:15:19 mitch Exp $</i></small></p></body></html>'
+    echo '<hr /><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.14 2007-06-24 10:57:01 lalufu Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -78,7 +79,7 @@ for DIR in *; do
     [ -r "$DIR" ] || continue
     [ "${DIR:0:1}" = '.' ] && continue
 
-    echo '<br>'
+    echo '<br />'
     if [ -r "$DIR/$INDEX" ] ; then
 	echo -n "<a href=\"$DIR/$INDEX\">$DIR</a>"
     else
@@ -88,7 +89,9 @@ for DIR in *; do
     echo -n : 1>&2
 
 done
-echo '</p><hl>'
+echo '</p><hr />'
+
+echo '<p>'
 
 for FILE in *; do
 
@@ -123,12 +126,12 @@ for FILE in *; do
     chmod --reference="$FILE" "$SUBDIR/$M_FILE"
     chmod --reference="$FILE" "$SUBDIR/$S_FILE"
 
-    echo "<a href=\"$SUBDIR/$M_INDEX\" alt=\"$FILE\"><img src=\"$SUBDIR/$S_FILE\" /></a>"
+    echo "<a href=\"$SUBDIR/$M_INDEX\"><img alt=\"$FILE\" src=\"$SUBDIR/$S_FILE\" /></a>"
 
     (
 	html_head
-	echo "<p><a href=\"../$INDEX\">up</a></p><hl>"
-	echo "<a href=\"../$FILE\" alt=\"$FILE\"><img src=\"$M_FILE\" /></a>"
+	echo "<p><a href=\"../$INDEX\">up</a></p><hr />"
+	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 	html_foot
 	
     ) > "$SUBDIR/$M_INDEX"
@@ -136,6 +139,8 @@ for FILE in *; do
     echo -n . 1>&2
 
 done
+
+echo '</p>'
 
 html_foot
 
