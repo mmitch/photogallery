@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.14 2007-06-24 10:57:01 lalufu Exp $
+# $Id: photogallery.sh,v 1.15 2007-06-24 11:16:14 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -58,7 +58,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<hr /><p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.14 2007-06-24 10:57:01 lalufu Exp $</i></small></p></body></html>'
+    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.15 2007-06-24 11:16:14 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -89,10 +89,9 @@ for DIR in *; do
     echo -n : 1>&2
 
 done
-echo '</p><hr />'
+echo '</p>'
 
 echo '<p>'
-
 for FILE in *; do
 
     [ -f "$FILE" ] || continue
@@ -130,7 +129,7 @@ for FILE in *; do
 
     (
 	html_head
-	echo "<p><a href=\"../$INDEX\">up</a></p><hr />"
+	echo "<p><a href=\"../$INDEX\">up</a></p>"
 	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 	html_foot
 	
@@ -139,7 +138,6 @@ for FILE in *; do
     echo -n . 1>&2
 
 done
-
 echo '</p>'
 
 html_foot
