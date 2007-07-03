@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.16 2007-06-24 20:31:04 mitch Exp $
+# $Id: photogallery.sh,v 1.17 2007-07-03 21:26:59 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -58,7 +58,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.16 2007-06-24 20:31:04 mitch Exp $</i></small></p></body></html>'
+    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.17 2007-07-03 21:26:59 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -69,9 +69,9 @@ exec > $INDEX
 html_head
 
 if [ -r "../$INDEX" ] ; then
-    echo -n "<p><a href=\"../$INDEX\">up</a>"
+    echo -n "<p><a href=\"../$INDEX\">[ up ]</a>"
 else
-    echo -n '<p><a href="..">up</a>'
+    echo -n '<p><a href="..">[ up ]</a>'
 fi
 for DIR in *; do
 
@@ -81,9 +81,9 @@ for DIR in *; do
 
     echo '<br />'
     if [ -r "$DIR/$INDEX" ] ; then
-	echo -n "<a href=\"$DIR/$INDEX\">$DIR</a>"
+	echo -n "<a href=\"$DIR/$INDEX\">$DIR/</a>"
     else
-	echo -n "<a href=\"$DIR\">$DIR</a>"
+	echo -n "<a href=\"$DIR\">$DIR/</a>"
     fi
 
     echo -n : 1>&2
@@ -129,7 +129,7 @@ for FILE in *; do
 
     (
 	html_head
-	echo "<p><a href=\"../$INDEX\">up</a></p>"
+	echo "<p><a href=\"../$INDEX\">&lt;&lt; back</a></p>"
 	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 	html_foot
 	
