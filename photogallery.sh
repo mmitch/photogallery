@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.17 2007-07-03 21:26:59 mitch Exp $
+# $Id: photogallery.sh,v 1.18 2007-07-14 20:28:33 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -13,6 +13,7 @@
 # It will generate a subfolder (set via $SUBDIR) with some thumbnails
 # and an HTML index file (set via $INDEX).
 # The gallery title is optional and defaults to the current directory.
+# A file named README will included in the generated HTML index.
 # 
 # Already existing thumbnails will not be overwritten.  If you change
 # the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
@@ -58,7 +59,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.17 2007-07-03 21:26:59 mitch Exp $</i></small></p></body></html>'
+    echo '<p><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.18 2007-07-14 20:28:33 mitch Exp $</i></small></p></body></html>'
 }
 
 #### main script
@@ -90,6 +91,12 @@ for DIR in *; do
 
 done
 echo '</p>'
+
+if [ -e README ] ; then
+    echo '<p>'
+    cat < README
+    echo '</p>'
+fi
 
 echo '<p>'
 for FILE in *; do
