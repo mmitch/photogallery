@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.19 2007-07-14 21:57:25 mitch Exp $
+# $Id: photogallery.sh,v 1.20 2007-07-19 19:56:39 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -59,7 +59,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.19 2007-07-14 21:57:25 mitch Exp $</i></small></small></p></body></html>'
+    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.20 2007-07-19 19:56:39 mitch Exp $</i></small></small></p></body></html>'
 }
 
 #### main script
@@ -74,6 +74,8 @@ if [ -r "../$INDEX" ] ; then
 else
     echo -n '<p><a href="..">[ up ]</a>'
 fi
+
+SUBDIRS=0
 for DIR in *; do
 
     [ -d "$DIR" ] || continue
@@ -88,9 +90,12 @@ for DIR in *; do
     fi
 
     echo -n : 1>&2
+    let SUBDIRS++
 
 done
 echo '</p>'
+
+echo -n "$SUBDIRS " 1>&2
 
 if [ -e README ] ; then
     echo '<p>'
@@ -99,6 +104,7 @@ if [ -e README ] ; then
 fi
 
 echo '<p>'
+PICTURES=0
 for FILE in *; do
 
     [ -f "$FILE" ] || continue
@@ -143,10 +149,15 @@ for FILE in *; do
     ) > "$SUBDIR/$M_INDEX"
 
     echo -n . 1>&2
+    let PICTURES++
 
 done
 echo '</p>'
+echo '<!--'
+echo PICTURES=$PICTURES
+echo SUBDIRS=$SUBDIRS
+echo '-->'
 
 html_foot
 
-echo 1>&2
+echo $PICTURES 1>&2
