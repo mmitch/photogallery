@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.20 2007-07-19 19:56:39 mitch Exp $
+# $Id: photogallery.sh,v 1.21 2007-07-19 19:58:18 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -50,6 +50,10 @@ INDEX=index.html
 
 #### function declarations
 
+status() {
+    echo "$@" 1>&2
+}
+
 html_head() {
     echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">'
     echo '<html><head>'
@@ -59,7 +63,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.20 2007-07-19 19:56:39 mitch Exp $</i></small></small></p></body></html>'
+    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.21 2007-07-19 19:58:18 mitch Exp $</i></small></small></p></body></html>'
 }
 
 #### main script
@@ -89,13 +93,13 @@ for DIR in *; do
 	echo -n "<a href=\"$DIR\">$DIR/</a>"
     fi
 
-    echo -n : 1>&2
+    status -n :
     let SUBDIRS++
 
 done
 echo '</p>'
 
-echo -n "$SUBDIRS " 1>&2
+status -n "$SUBDIRS "
 
 if [ -e README ] ; then
     echo '<p>'
@@ -148,7 +152,7 @@ for FILE in *; do
 	
     ) > "$SUBDIR/$M_INDEX"
 
-    echo -n . 1>&2
+    status -n .
     let PICTURES++
 
 done
@@ -160,4 +164,4 @@ echo '-->'
 
 html_foot
 
-echo $PICTURES 1>&2
+status $PICTURES
