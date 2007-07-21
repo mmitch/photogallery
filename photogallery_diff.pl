@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff.pl,v 1.1 2007-07-19 21:06:59 mitch Exp $
+# $Id: photogallery_diff.pl,v 1.2 2007-07-21 13:25:11 mitch Exp $
 #
 # list changes within photogallery.sh directory structure
 #
@@ -27,15 +27,18 @@ while (my $index = <FIND>) {
     chomp $index;
 
     open INDEX, '<', $index or die "can't read `$index': $!";
-    my $pictures = 0;
+    my $new = { 'SUBDIRS' => 0 };
     while (my $line = <INDEX>) {
 	if ($line =~ /^PICTURES=(\d+)$/) {
-	    $pictures = $1;
+	    $new->{'PICTURES'} = $1;
+	} elsif ($line =~ /^SUBDIRS=(\d+)$/) {
+	    $new->{'SUBDIRS'} = $1;
+	} elsif ($line =~ /^DATE=(\d+)$/) {
+	    $new->{'DATE'} = $1;
 	}
     }
     close INDEX or die "can't close `$index': $!";
-    $count_new{$index} = $pictures if $pictures;
-
+    $count_new{$index} = $new if exists $new->{'PICTURES'};
 }
 close FIND or die "can't close find: $!";
 
@@ -47,7 +50,7 @@ open OLDSTATS, '<', $oldstats or die "can't open `$oldstats': $!";
 while (my $line = <OLDSTATS>) {
     chomp $line;
     if ($line =~ /^(\d+)\t(.+)$/) {
-	$count_old{$2} = $1;
+	$count_old{$2}->{'PICTURES'} = $1;
     }
 }
 close OLDSTATS or die "can't close `$oldstats': $!";
@@ -72,22 +75,22 @@ my %count_change;
 foreach my $dir (sort keys %count_new) {
     my ($old, $new) = ($count_old{$dir}, $count_new{$dir});
     if (defined $old) {
-	if ($old != $new) {
+	if ($old->{'PICTURES'} != $new->{'PICTURES'}) {
 	    $count_change{$dir} = { 'OLD' => $old, 'NEW' => $new };
 	}
     } else {
-	$count_change{$dir} = { 'OLD' => 0, 'NEW' => $new };
+	$count_change{$dir} = { 'OLD' => { 'PICTURES' => 0 }, 'NEW' => $new };
     }
 }
 #   remove
 foreach my $dir (sort keys %count_old) {
     my ($old, $new) = ($count_old{$dir}, $count_new{$dir});
     if (defined $new) {
-	if ($old != $new) {
+	if ($old->{'PICTURES'} != $new->{'PICTURES'}) {
 	    $count_change{$dir} = { 'OLD' => $old, 'NEW' => $new };
 	}
     } else {
-	$count_change{$dir} = { 'OLD' => $old, 'NEW' => 0 };
+	$count_change{$dir} = { 'OLD' => $old, 'NEW' => { 'PICTURES' => 0 } };
     }
 }
 
@@ -96,9 +99,10 @@ my $timestamp = `date +%Y%m%d%H%M%S`;
 chomp $timestamp;
 foreach my $dir (reverse sort keys %count_change) {
     push @diff, sprintf "%d\t%d\t%s\t%s",
-    $count_change{$dir}->{'OLD'},
-    $count_change{$dir}->{'NEW'},
+    $count_change{$dir}->{'OLD'}->{'PICTURES'},
+    $count_change{$dir}->{'NEW'}->{'PICTURES'},
     $timestamp,
+#    exists $count_change{$dir}->{'NEW'}->{'DATE'} ? $count_change{$dir}->{'NEW'}->{'DATE'} : $timestamp,
     $dir;
 }
 
