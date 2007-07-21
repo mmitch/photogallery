@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2rss.pl,v 1.1 2007-07-21 14:36:19 mitch Exp $
+# $Id: photogallery_diff2rss.pl,v 1.2 2007-07-21 14:44:51 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
@@ -56,7 +56,7 @@ print <<"EOF";
     <description>$RSSTITLE</description>
 EOF
 ;
-print '    <generator>$Id: photogallery_diff2rss.pl,v 1.1 2007-07-21 14:36:19 mitch Exp $</generator>';
+print '    <generator>$Id: photogallery_diff2rss.pl,v 1.2 2007-07-21 14:44:51 mitch Exp $</generator>';
 print "\n";
 
 # print changes
@@ -83,6 +83,23 @@ foreach my $diff (reverse @diff) {
     }
 
     next unless defined $text;
+
+    # get thumbnail
+    my $pic;
+    my $thumbdir = $diff->{PATH};
+    $thumbdir =~ s:index.html:.webthumbs/:;
+    opendir THUMBS, $thumbdir or die "can't opendir `${thumbdir}': $!";
+    while (my $file = readdir (THUMBS)) {
+	if ($file =~ /_s.jpg$/) {
+	    $pic = $file;
+	    last;
+	}
+    }
+    closedir THUMBS or die "can't closedir `${thumbdir}': $!";
+    if ($pic) {
+	$thumbdir =~ s/^$DIRPREFIX/$WEBPREFIX/;
+	$text .= "<p><img src=\"$thumbdir$pic\"></p>";
+    }
 
     my $guid = md5_hex( $url . $path . $text . $date );
 
