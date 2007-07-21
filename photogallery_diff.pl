@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff.pl,v 1.2 2007-07-21 13:25:11 mitch Exp $
+# $Id: photogallery_diff.pl,v 1.3 2007-07-21 13:57:21 mitch Exp $
 #
 # list changes within photogallery.sh directory structure
 #
@@ -126,7 +126,7 @@ my $newstats = "$DATADIR/last_run.new";
 open NEWSTATS, '>', $newstats or die "can't open `$newstats': $!";
 foreach my $dir (sort keys %count_new) {
     printf NEWSTATS "%d\t%s\n",
-    $count_new{$dir},
+    $count_new{$dir}->{'PICTURES'},
     $dir;
 }
 close NEWSTATS or die "can't close `$newstats': $!";
