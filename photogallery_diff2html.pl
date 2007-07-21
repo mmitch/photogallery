@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2html.pl,v 1.1 2007-07-21 13:48:33 mitch Exp $
+# $Id: photogallery_diff2html.pl,v 1.2 2007-07-21 13:53:16 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
@@ -46,6 +46,7 @@ print <<"EOF";
 <meta http-equiv="content-type" content="text/html; charset=${CHARSET}" />
 <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="$RSSURL">
 </head><body>
+<h1>photogallery updates</h1>
 EOF
     ;
 
@@ -71,7 +72,7 @@ foreach my $diff (reverse @diff) {
 	$text = ($diff->{'OLD'} - $diff->{'NEW'}) . " Bilder gelöscht";
     }
 
-    printf "<li>%s <a href=\"%s\">%s</a><br>%s</li>\n",
+    printf "<li>%s <a href=\"%s\">%s</a><br>%s</br></li>\n",
     $date,
     $url,
     $path,
@@ -85,5 +86,5 @@ my $date = `LANG=${DATELANG} date`;
 chomp $date;
 print "<p>(<a href=\"$RSSURL\">RSS feed</a>)</p>\n";
 print "<p><small><small><i>generated on $date by ";
-print '$Id: photogallery_diff2html.pl,v 1.1 2007-07-21 13:48:33 mitch Exp $';
+print '$Id: photogallery_diff2html.pl,v 1.2 2007-07-21 13:53:16 mitch Exp $';
 print "</i></small></small></p></body></html>\n";
