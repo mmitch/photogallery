@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2html.pl,v 1.6 2007-07-21 14:36:19 mitch Exp $
+# $Id: photogallery_diff2rss.pl,v 1.1 2007-07-21 14:36:19 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
@@ -9,13 +9,19 @@
 use strict;
 use warnings;
 
+use Digest::MD5 qw(md5_hex);
+use POSIX qw(strftime);
+
 # variables
 my $DATADIR    = '~/photogallery';
 my $DIRPREFIX  = '/mnt/bilder/Fotos';
 my $WEBPREFIX  = 'http://www.mitch.h.shuttle.de/fotos';
-my $RSSURL     = 'http://www.mitch.h.shuttle.de/fotos/changes.xml';
+my $CHANGESURL = 'http://www.mitch.h.shuttle.de/fotos/changes.html';
+my $RSSURL     = '';
 my $CHARSET    = 'UTF-8';
 my $DATELANG   = 'C';
+my $RSSTITLE   = 'mitch\'s photogallery';
+my $RSSAUTHOR  = 'mitch';
 
 # expand ~
 $DATADIR =~ s/^~/$ENV{HOME}/;
@@ -40,21 +46,25 @@ close DIFFS or die "can't close `$diffs': $!";
 
 # print header
 print <<"EOF";
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">
-<html><head>
-<title>photogallery updates</title>
-<meta http-equiv="content-type" content="text/html; charset=${CHARSET}" />
-<link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="$RSSURL">
-</head><body>
-<h1>photogallery updates</h1>
+<?xml version="1.0" encoding="${CHARSET}"?>
+<rss version="2.0"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>$RSSTITLE</title>
+    <link>$CHANGESURL</link>
+    <description>$RSSTITLE</description>
 EOF
-    ;
+;
+print '    <generator>$Id: photogallery_diff2rss.pl,v 1.1 2007-07-21 14:36:19 mitch Exp $</generator>';
+print "\n";
 
 # print changes
-print "<ul>\n";
+my $timezone = `date +%z`;
+chomp $timezone;
 foreach my $diff (reverse @diff) {
     my $date = $diff->{DATE};
-    $date =~ s/^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d).*$/$3.$2.$1 $4:$5h/;
+    $date = strftime("%a, %d %b %Y %H:%M:%S $timezone", substr($date,12,2), substr($date,10,2), substr($date,8,2), substr($date,6,2), substr($date,4,2)-1, substr($date,0,4)-1900);
     my $path = $diff->{PATH};
     $path =~ s/^$DIRPREFIX//;
     my $url = $WEBPREFIX.$path;
@@ -72,19 +82,23 @@ foreach my $diff (reverse @diff) {
 	$text = ($diff->{'OLD'} - $diff->{'NEW'}) . " Bilder gelöscht";
     }
 
-    printf "<li>%s <a href=\"%s\">%s</a><br />%s<br />&nbsp;</li>\n",
-    $date,
-    $url,
-    $path,
-    $text
-	if defined $text;
+    next unless defined $text;
+
+    my $guid = md5_hex( $url . $path . $text . $date );
+
+    printf <<"EOF"
+    <item>
+      <title><![CDATA[${path}]]></title>
+      <content:encoded>\n<![CDATA[${text}]]></content:encoded>
+      <pubDate>$date</pubDate>
+      <dc:creator>$RSSAUTHOR</dc:creator>
+      <guid isPermaLink=\"false\">${guid}</guid>
+      <link>${url}</link>
+    </item>
+EOF
+;
 }
-print "</ul>\n";
 
 # print footer
-my $date = `LANG=${DATELANG} date`;
-chomp $date;
-print "<p>(<a href=\"$RSSURL\">RSS feed</a>)</p>\n";
-print "<p><small><small><i>generated on $date by ";
-print '$Id: photogallery_diff2html.pl,v 1.6 2007-07-21 14:36:19 mitch Exp $';
-print "</i></small></small></p></body></html>\n";
+print "  </channel>\n";
+print "</rss>\n";
