@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff.pl,v 1.3 2007-07-21 13:57:21 mitch Exp $
+# $Id: photogallery_diff.pl,v 1.4 2007-07-29 14:19:03 mitch Exp $
 #
 # list changes within photogallery.sh directory structure
 #
@@ -13,6 +13,7 @@ use warnings;
 my $DATADIR    = '~/photogallery';
 my $GALLERYDIR = '/mnt/bilder/Fotos';
 my $MAXCHANGES = 20;
+my $SKIPDIR    = '^/mnt/bilder/Fotos/more/';
 
 # expand ~
 $DATADIR    =~ s/^~/$ENV{HOME}/;
@@ -25,6 +26,8 @@ my %count_new;
 open FIND, "find $GALLERYDIR -type f -name index.html|" or die "can't spawn find: $!";
 while (my $index = <FIND>) {
     chomp $index;
+
+    next if $index =~ /$SKIPDIR/;
 
     open INDEX, '<', $index or die "can't read `$index': $!";
     my $new = { 'SUBDIRS' => 0 };
