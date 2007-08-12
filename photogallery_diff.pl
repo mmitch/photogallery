@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff.pl,v 1.4 2007-07-29 14:19:03 mitch Exp $
+# $Id: photogallery_diff.pl,v 1.5 2007-08-12 17:29:21 mitch Exp $
 #
 # list changes within photogallery.sh directory structure
 #
@@ -9,25 +9,24 @@
 use strict;
 use warnings;
 
-# variables
-my $DATADIR    = '~/photogallery';
-my $GALLERYDIR = '/mnt/bilder/Fotos';
-my $MAXCHANGES = 20;
-my $SKIPDIR    = '^/mnt/bilder/Fotos/more/';
+# parse configuration file
+my %conf;
+eval(`cat ~/.photogallery-conf.pl`);
 
-# expand ~
-$DATADIR    =~ s/^~/$ENV{HOME}/;
-$GALLERYDIR =~ s/^~/$ENV{HOME}/;
+# check variables
+foreach (qw( DATADIR GALLERYDIR MAXCHANGES )) {
+    die "configuration key $_ is missing\n" unless exists $conf{$_};
+}
 
 # scan structure
 # get new counts
 my %count_new;
 
-open FIND, "find $GALLERYDIR -type f -name index.html|" or die "can't spawn find: $!";
+open FIND, "find $conf{GALLERYDIR} -type f -name index.html|" or die "can't spawn find: $!";
 while (my $index = <FIND>) {
     chomp $index;
 
-    next if $index =~ /$SKIPDIR/;
+    next if $index =~ /$conf{SKIPDIR}/;
 
     open INDEX, '<', $index or die "can't read `$index': $!";
     my $new = { 'SUBDIRS' => 0 };
@@ -47,7 +46,7 @@ close FIND or die "can't close find: $!";
 
 # get old counts
 my %count_old;
-my $oldstats = "$DATADIR/last_run";
+my $oldstats = "$conf{DATADIR}/last_run";
 
 open OLDSTATS, '<', $oldstats or die "can't open `$oldstats': $!";
 while (my $line = <OLDSTATS>) {
@@ -60,7 +59,7 @@ close OLDSTATS or die "can't close `$oldstats': $!";
 
 # get old diffs
 my @diff;
-my $olddiffs = "$DATADIR/last_diffs";
+my $olddiffs = "$conf{DATADIR}/last_diffs";
 
 open OLDDIFFS, '<', $olddiffs or die "can't open `$olddiffs': $!";
 while (my $line = <OLDDIFFS>) {
@@ -110,14 +109,14 @@ foreach my $dir (reverse sort keys %count_change) {
 }
 
 # chop diffs
-if (scalar @diff > $MAXCHANGES) {
-    splice(@diff, 0, -$MAXCHANGES);
+if (scalar @diff > $conf{MAXCHANGES}) {
+    splice(@diff, 0, -$conf{MAXCHANGES});
 }
 
 ### TODO below here
 
 # print new diffs
-my $newdiffs = "$DATADIR/last_diffs.new";
+my $newdiffs = "$conf{DATADIR}/last_diffs.new";
 open NEWDIFFS, '>', $newdiffs or die "can't open `$newdiffs': $!";
 foreach my $diff (@diff) {
     print NEWDIFFS "$diff\n";
@@ -125,7 +124,7 @@ foreach my $diff (@diff) {
 close NEWDIFFS or die "can't close `$newdiffs': $!";
 
 # print new status
-my $newstats = "$DATADIR/last_run.new";
+my $newstats = "$conf{DATADIR}/last_run.new";
 open NEWSTATS, '>', $newstats or die "can't open `$newstats': $!";
 foreach my $dir (sort keys %count_new) {
     printf NEWSTATS "%d\t%s\n",
@@ -135,8 +134,8 @@ foreach my $dir (sort keys %count_new) {
 close NEWSTATS or die "can't close `$newstats': $!";
 
 # rename
-my $bakdiffs = "$DATADIR/last_diffs.bak";
-my $bakstats = "$DATADIR/last_run.bak";
+my $bakdiffs = "$conf{DATADIR}/last_diffs.bak";
+my $bakstats = "$conf{DATADIR}/last_run.bak";
 
 my @moves = (
 	     $olddiffs, $bakdiffs,

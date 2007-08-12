@@ -1,0 +1,55 @@
+# $Id: photogallery-conf.pl.sample,v 1.1 2007-08-12 17:29:20 mitch Exp $
+#
+# example configuration for photogallery scripts
+# edit and save it as '~/.photogallery-conf.pl'
+
+# Don't include any dangerous commands here, this file gets executed
+# every time you call a photogallery script.  Better not make it
+# world-writeable.
+
+#
+# CHANGESURL:   URL of the HTML changes file
+# CHARSET:      charset to use for HTML and RSS files
+# DATADIR:      where status information is kept
+#               list of known folders etc.
+# DATELANG:     LANG used for calls to the date(1) command
+# DIRPREFIX:    remove this prefix from a searched directory
+#               and replace it with WEBPREFIX to generate the gallery URL
+# GALLERYDIR:   root directory of photo galleries
+# MAXCHANGES:   maximum number of changes to record
+#               e.g. max. entries in RSS file
+# RSSAUTHOR:    author listed in RSS feed
+# RSSTITLE:     title of RSS feed
+# RSSURL:       URL of the generated RSS feed
+# SKIPDIR:      a regexp of GALLERYDIRs that should not be searched
+#               useful for an incoming or not-yet-sorted directory
+# WEBPREFIX:    append this to a searched directory to generate the gallery URL
+#               after DIRPREFIX has been removed
+
+#
+# set variables:
+$conf{DATADIR}    = '~/photogallery';
+$conf{DIRPREFIX}  = '/mnt/bilder/Fotos';
+$conf{GALLERYDIR} = '/mnt/bilder/Fotos';
+$conf{SKIPDIR}    = '^/mnt/bilder/Fotos/more/';
+$conf{WEBPREFIX}  = 'http://www.mitch.h.shuttle.de/fotos';
+$conf{RSSURL}     = 'http://www.mitch.h.shuttle.de/fotos/changes.xml';
+$conf{CHANGESURL} = 'http://www.mitch.h.shuttle.de/fotos/changes.html';
+
+$conf{MAXCHANGES} = 20;
+$conf{DATELANG}   = 'C';
+$conf{CHARSET}    = 'UTF-8';
+$conf{RSSAUTHOR}  = 'mitch';
+$conf{RSSTITLE}   = 'mitch\'s photogallery';
+
+#
+# expand ~ in directories:
+foreach my $key (keys %conf) {
+    if ($key =~ /DIR$/) {
+	$conf{$key} =~ s/^~/$ENV{HOME}/;
+    }
+}
+
+#
+# end
+1;

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2rss.pl,v 1.2 2007-07-21 14:44:51 mitch Exp $
+# $Id: photogallery_diff2rss.pl,v 1.3 2007-08-12 17:29:21 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
@@ -12,23 +12,18 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use POSIX qw(strftime);
 
-# variables
-my $DATADIR    = '~/photogallery';
-my $DIRPREFIX  = '/mnt/bilder/Fotos';
-my $WEBPREFIX  = 'http://www.mitch.h.shuttle.de/fotos';
-my $CHANGESURL = 'http://www.mitch.h.shuttle.de/fotos/changes.html';
-my $RSSURL     = '';
-my $CHARSET    = 'UTF-8';
-my $DATELANG   = 'C';
-my $RSSTITLE   = 'mitch\'s photogallery';
-my $RSSAUTHOR  = 'mitch';
+# parse configuration file
+my %conf;
+eval(`cat ~/.photogallery-conf.pl`);
 
-# expand ~
-$DATADIR =~ s/^~/$ENV{HOME}/;
+# check variables
+foreach (qw( DATADIR DIRPREFIX WEBPREFIX CHARSET CHANGESURL RSSTITLE RSSAUTHOR )) {
+    die "configuration key $_ is missing\n" unless exists $conf{$_};
+}
 
 # get old diffs
 my @diff;
-my $diffs = "$DATADIR/last_diffs";
+my $diffs = "$conf{DATADIR}/last_diffs";
 
 open DIFFS, '<', $diffs or die "can't open `$diffs': $!";
 while (my $line = <DIFFS>) {
@@ -46,17 +41,17 @@ close DIFFS or die "can't close `$diffs': $!";
 
 # print header
 print <<"EOF";
-<?xml version="1.0" encoding="${CHARSET}"?>
+<?xml version="1.0" encoding="${conf{CHARSET}}"?>
 <rss version="2.0"
  xmlns:dc="http://purl.org/dc/elements/1.1/"
  xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>$RSSTITLE</title>
-    <link>$CHANGESURL</link>
-    <description>$RSSTITLE</description>
+    <title>$conf{RSSTITLE}</title>
+    <link>$conf{CHANGESURL}</link>
+    <description>$conf{RSSTITLE}</description>
 EOF
 ;
-print '    <generator>$Id: photogallery_diff2rss.pl,v 1.2 2007-07-21 14:44:51 mitch Exp $</generator>';
+print '    <generator>$Id: photogallery_diff2rss.pl,v 1.3 2007-08-12 17:29:21 mitch Exp $</generator>';
 print "\n";
 
 # print changes
@@ -66,8 +61,8 @@ foreach my $diff (reverse @diff) {
     my $date = $diff->{DATE};
     $date = strftime("%a, %d %b %Y %H:%M:%S $timezone", substr($date,12,2), substr($date,10,2), substr($date,8,2), substr($date,6,2), substr($date,4,2)-1, substr($date,0,4)-1900);
     my $path = $diff->{PATH};
-    $path =~ s/^$DIRPREFIX//;
-    my $url = $WEBPREFIX.$path;
+    $path =~ s/^$conf{DIRPREFIX}//;
+    my $url = $conf{WEBPREFIX}.$path;
     $path =~ s:/index.html$::;
 
     my $text;
@@ -97,7 +92,7 @@ foreach my $diff (reverse @diff) {
     }
     closedir THUMBS or die "can't closedir `${thumbdir}': $!";
     if ($pic) {
-	$thumbdir =~ s/^$DIRPREFIX/$WEBPREFIX/;
+	$thumbdir =~ s/^$conf{DIRPREFIX}/$conf{WEBPREFIX}/;
 	$text .= "<p><img src=\"$thumbdir$pic\"></p>";
     }
 
@@ -108,7 +103,7 @@ foreach my $diff (reverse @diff) {
       <title><![CDATA[${path}]]></title>
       <content:encoded>\n<![CDATA[${text}]]></content:encoded>
       <pubDate>$date</pubDate>
-      <dc:creator>$RSSAUTHOR</dc:creator>
+      <dc:creator>$conf{RSSAUTHOR}</dc:creator>
       <guid isPermaLink=\"false\">${guid}</guid>
       <link>${url}</link>
     </item>

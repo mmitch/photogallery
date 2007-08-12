@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2html.pl,v 1.6 2007-07-21 14:36:19 mitch Exp $
+# $Id: photogallery_diff2html.pl,v 1.7 2007-08-12 17:29:21 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
@@ -9,20 +9,18 @@
 use strict;
 use warnings;
 
-# variables
-my $DATADIR    = '~/photogallery';
-my $DIRPREFIX  = '/mnt/bilder/Fotos';
-my $WEBPREFIX  = 'http://www.mitch.h.shuttle.de/fotos';
-my $RSSURL     = 'http://www.mitch.h.shuttle.de/fotos/changes.xml';
-my $CHARSET    = 'UTF-8';
-my $DATELANG   = 'C';
+# parse configuration file
+my %conf;
+eval(`cat ~/.photogallery-conf.pl`);
 
-# expand ~
-$DATADIR =~ s/^~/$ENV{HOME}/;
+# check variables
+foreach (qw( DATADIR DIRPREFIX WEBPREFIX RSSURL CHARSET DATELANG )) {
+    die "configuration key $_ is missing\n" unless exists $conf{$_};
+}
 
 # get old diffs
 my @diff;
-my $diffs = "$DATADIR/last_diffs";
+my $diffs = "$conf{DATADIR}/last_diffs";
 
 open DIFFS, '<', $diffs or die "can't open `$diffs': $!";
 while (my $line = <DIFFS>) {
@@ -43,8 +41,8 @@ print <<"EOF";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">
 <html><head>
 <title>photogallery updates</title>
-<meta http-equiv="content-type" content="text/html; charset=${CHARSET}" />
-<link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="$RSSURL">
+<meta http-equiv="content-type" content="text/html; charset=${conf{CHARSET}}" />
+<link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="$conf{RSSURL}">
 </head><body>
 <h1>photogallery updates</h1>
 EOF
@@ -56,8 +54,8 @@ foreach my $diff (reverse @diff) {
     my $date = $diff->{DATE};
     $date =~ s/^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d).*$/$3.$2.$1 $4:$5h/;
     my $path = $diff->{PATH};
-    $path =~ s/^$DIRPREFIX//;
-    my $url = $WEBPREFIX.$path;
+    $path =~ s/^$conf{DIRPREFIX}//;
+    my $url = $conf{WEBPREFIX}.$path;
     $path =~ s:/index.html$::;
 
     my $text;
@@ -82,9 +80,9 @@ foreach my $diff (reverse @diff) {
 print "</ul>\n";
 
 # print footer
-my $date = `LANG=${DATELANG} date`;
+my $date = `LANG=${conf{DATELANG}} date`;
 chomp $date;
-print "<p>(<a href=\"$RSSURL\">RSS feed</a>)</p>\n";
+print "<p>(<a href=\"$conf{RSSURL}\">RSS feed</a>)</p>\n";
 print "<p><small><small><i>generated on $date by ";
-print '$Id: photogallery_diff2html.pl,v 1.6 2007-07-21 14:36:19 mitch Exp $';
+print '$Id: photogallery_diff2html.pl,v 1.7 2007-08-12 17:29:21 mitch Exp $';
 print "</i></small></small></p></body></html>\n";
