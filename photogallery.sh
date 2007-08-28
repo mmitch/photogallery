@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.23 2007-08-24 17:49:36 mitch Exp $
+# $Id: photogallery.sh,v 1.24 2007-08-28 21:10:41 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
@@ -63,7 +63,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.23 2007-08-24 17:49:36 mitch Exp $</i></small></small></p></body></html>'
+    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.24 2007-08-28 21:10:41 mitch Exp $</i></small></small></p></body></html>'
 }
 
 #### main script
@@ -106,14 +106,14 @@ if [ -e README ] ; then
     echo '</p>'
 fi
 
+mkdir -p "$SUBDIR" || exit 1
+
 echo '<p>'
 PICTURES=0
 for FILE in *; do
 
     [ -f "$FILE" ] || continue
     [ -r "$FILE" ] || continue
-
-    mkdir -p $SUBDIR || exit 1
 
     EXT="${FILE/*.}"
     M_INDEX="${FILE}_m.html"
@@ -128,7 +128,15 @@ for FILE in *; do
 		;;
 	    
 	    pef|PEF)
-		dcraw -c -w -o1 -h "$FILE" | convert -scale $MEDIUM ppm:- "$SUBDIR/$M_FILE"
+		FLIP=0
+		if [ -e "$FILE.rotation" ] ; then
+		    case $(< "$FILE.rotation") in
+			180)  FLIP=3 ;;
+			90)  FLIP=6 ;;
+			270)  FLIP=5 ;;
+		    esac
+		fi
+		dcraw -c -w -o1 -h -t $FLIP "$FILE" | convert -scale $MEDIUM ppm:- "$SUBDIR/$M_FILE"
 		;;
 	    
 	    *)
@@ -167,3 +175,5 @@ echo '-->'
 html_foot
 
 status $PICTURES
+
+[ $PICTURES -eq 0 ] && rmdir "$SUBDIR"
