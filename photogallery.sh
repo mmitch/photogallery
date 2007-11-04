@@ -176,4 +176,7 @@ html_foot
 
 status $PICTURES
 
-[ $PICTURES -eq 0 ] && rmdir "$SUBDIR"
+if [ $PICTURES -eq 0 ] ; then
+    rmdir "$SUBDIR"
+fi
+
