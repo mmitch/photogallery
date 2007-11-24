@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff.pl,v 1.5 2007-08-12 17:29:21 mitch Exp $
 #
 # list changes within photogallery.sh directory structure
 #

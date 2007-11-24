@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id: photogallery.sh,v 1.24 2007-08-28 21:10:41 mitch Exp $
 #
 # simple static photogallery script
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>

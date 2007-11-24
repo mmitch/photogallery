@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# $Id: photogallery_diff2rss.pl,v 1.4 2007-08-26 08:06:13 mitch Exp $
 #
 # converts photogallery.sh changes to HTML page
 #
