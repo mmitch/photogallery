@@ -1,3 +1,21 @@
 - release complete suite on website
 - unifiy configuration variables shell/perl ?
 - CSS support?
+
+
+19:49 < mitch> wenn hier jemand ein wenig Gehirnschmalz übrig hat:
+19:49 < mitch> Wie baue ich in photogallery.sh am einfachsten
+   CSS-Unterstützung ein?
+19:49 < mitch> in jedes Dokument ist blöd, das sollte schon auf eine
+   Datei verweisen
+19:50 < mitch> nur klappt das dann natürlich wieder nicht gleichzeitig
+   für "lokal im Filesystem geöffnet" und "über HTTP geöffnet"
+19:50 < mitch> außerdem wird es wohl, wenn ich die Japanfotos
+   durchgeguckt habe, eine Version geben, die pro-Bild-Kommentare
+   unterstützt 
+19:50 < mitch> kann ich ja ins alt-Tag packen, aber woher soll man
+   dann merken, dass ein Bild überhaupt sowas hat?  alles mit dem
+   Mauszeiger abgrasen ist doof 
+19:51 < mitch> und vielleicht gibt es für den ersten Zoom-Modus einen
+   Slideshowmodus, wo man der Reihe nach alle Bilder durchklicken kann
+   und der Bildtext dann schön untendrunter angezeigt wird 
