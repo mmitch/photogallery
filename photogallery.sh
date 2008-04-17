@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # simple static photogallery script
-# 2007 (c) by Christian Garbs <mitch@cgarbs.de>
+# 2007-2008 (c) by Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL
 
 #
@@ -109,7 +109,15 @@ mkdir -p "$SUBDIR" || exit 1
 
 echo '<p>'
 PICTURES=0
+
+declare -a FILES
 for FILE in *; do
+    FILES+=("$FILE")
+done
+
+for (( IDX=0; $IDX <= ${#FILES[*]}; IDX+=1 )) ; do
+
+    FILE="${FILES[${IDX}]}"
 
     [ -f "$FILE" ] || continue
     [ -r "$FILE" ] || continue
