@@ -112,15 +112,26 @@ PICTURES=0
 
 declare -a FILES
 for FILE in *; do
+    [ -f "$FILE" ] || continue
+    [ -r "$FILE" ] || continue
+    EXT="${FILE/*.}"
+
+    case "$EXT" in 
+	gif|jpeg|jpg|JPG|png|tif|tiff)
+	    ;;
+	pef|PEF)
+	    ;;
+	*)
+	    continue
+	    ;;
+    esac
+
     FILES+=("$FILE")
 done
 
-for (( IDX=0; $IDX <= ${#FILES[*]}; IDX+=1 )) ; do
+for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 
     FILE="${FILES[${IDX}]}"
-
-    [ -f "$FILE" ] || continue
-    [ -r "$FILE" ] || continue
 
     EXT="${FILE/*.}"
     M_INDEX="${FILE}_m.html"
@@ -162,7 +173,21 @@ for (( IDX=0; $IDX <= ${#FILES[*]}; IDX+=1 )) ; do
 
     (
 	html_head
-	echo "<p><a href=\"../$INDEX\">&lt;&lt; back</a></p>"
+	echo -n "<p>"
+	PREV=$(( $IDX - 1 ))
+	NEXT=$(( $IDX + 1 ))
+	if [ $IDX -gt 0 ] ; then
+	    echo -n "<p><a href=\"${FILES[${PREV}]}_m.html\">&lt;&lt;</a>"
+	else
+	    echo -n "<p>&lt;&lt;"
+	fi
+	echo " &nbsp; <a href=\"../$INDEX\">back</a> &nbsp; "
+	if [ $NEXT -lt ${#FILES[*]} ] ; then
+	    echo "<a href=\"${FILES[${NEXT}]}_m.html\">&gt;&gt;</a></p>"
+	else
+	    echo "&gt;&gt;</p>"
+	fi
+	echo "</p>"
 	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 	html_foot
 	
