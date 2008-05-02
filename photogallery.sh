@@ -11,8 +11,12 @@
 # Run this script inside a directory with pictures.
 # It will generate a subfolder (set via $SUBDIR) with some thumbnails
 # and an HTML index file (set via $INDEX).
-# The gallery title is optional and defaults to the current directory.
-# A file named README will included in the generated HTML index.
+# The gallery title is optional and defaults to the current directory
+# name.
+# To describe a gallery, put a file named README into the directory.
+# It will be included in the generated HTML index file.
+# To describe an image some.jpeg, put a file named some.jpeg.text into
+# the same directory.
 # 
 # Already existing thumbnails will not be overwritten.  If you change
 # the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
@@ -170,17 +174,19 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
     chmod --reference="$FILE" "$SUBDIR/$S_FILE"
 
     if [ -s "${FILE}.text" ] ; then
-	$FILETEXT="$(<"${FILE}.text")"
-	$ALTTEXT="$FILETEXT"
+	FILETEXT="$(<"${FILE}.text")"
+	ALTTEXT="$FILETEXT"
     else
-	$FILETEXT=
-	$ALTTEXT="${FILE}"
+	FILETEXT=
+	ALTTEXT="${FILE}"
     fi
     ALTTEXT=$( echo "$ALTTEXT" | sed -e 's/</&lt;/g' -e 's/>/&gt;/g' -e 's/"/&quot;/g' )
 
-    [ "$FILETEXT" ] && echo '|'
-    echo "<a href=\"$SUBDIR/$M_INDEX\"><img alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
-    [ "$FILETEXT" ] && echo '|'
+    if [ "$FILETEXT" ] ; then
+	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=3 alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+    else
+	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=1 alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+    fi
 
     (
 	html_head
