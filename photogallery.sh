@@ -169,7 +169,18 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
     chmod --reference="$FILE" "$SUBDIR/$M_FILE"
     chmod --reference="$FILE" "$SUBDIR/$S_FILE"
 
-    echo "<a href=\"$SUBDIR/$M_INDEX\"><img alt=\"$FILE\" src=\"$SUBDIR/$S_FILE\" /></a>"
+    if [ -s "${FILE}.text" ] ; then
+	$FILETEXT="$(<"${FILE}.text")"
+	$ALTTEXT="$FILETEXT"
+    else
+	$FILETEXT=
+	$ALTTEXT="${FILE}"
+    fi
+    ALTTEXT=$( echo "$ALTTEXT" | sed -e 's/</&lt;/g' -e 's/>/&gt;/g' -e 's/"/&quot;/g' )
+
+    [ "$FILETEXT" ] && echo '|'
+    echo "<a href=\"$SUBDIR/$M_INDEX\"><img alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+    [ "$FILETEXT" ] && echo '|'
 
     (
 	html_head
@@ -189,6 +200,9 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	fi
 	echo "</p>"
 	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
+
+	[ "$FILETEXT" ] && echo "<p>${FILETEXT}</p>"
+
 	html_foot
 	
     ) > "$SUBDIR/$M_INDEX"
