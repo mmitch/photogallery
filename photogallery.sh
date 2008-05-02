@@ -36,6 +36,7 @@
 # External commands needed:
 #    convert from Imagemagick
 #    dcraw (only if you want to convert RAW files)
+#    sed
 #
 
 #### commandline parameters
@@ -180,12 +181,12 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	FILETEXT=
 	ALTTEXT="${FILE}"
     fi
-    ALTTEXT=$( echo "$ALTTEXT" | sed -e 's/</&lt;/g' -e 's/>/&gt;/g' -e 's/"/&quot;/g' )
+    ALTTEXT=$( echo "$ALTTEXT" | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g' )
 
     if [ "$FILETEXT" ] ; then
-	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=3 alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=3 alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
     else
-	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=1 alt=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=1 alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
     fi
 
     (
