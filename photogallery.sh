@@ -62,7 +62,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by $Id: photogallery.sh,v 1.24 2007-08-28 21:10:41 mitch Exp $</i></small></small></p></body></html>'
+    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/photogallery.git">photogallery.sh</a></i></small></small></p></body></html>'
 }
 
 #### main script
