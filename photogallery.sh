@@ -215,3 +215,4 @@ if [ ${#FILES[*]} == 0 ] ; then
     rmdir "$SUBDIR"
 fi
 
+status
