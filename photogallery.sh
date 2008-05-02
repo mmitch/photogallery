@@ -108,7 +108,6 @@ fi
 mkdir -p "$SUBDIR" || exit 1
 
 echo '<p>'
-PICTURES=0
 
 declare -a FILES
 for FILE in *; do
@@ -128,6 +127,8 @@ for FILE in *; do
 
     FILES+=("$FILE")
 done
+
+status -n "${#FILES[*]}>"
 
 for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 
@@ -193,22 +194,24 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	
     ) > "$SUBDIR/$M_INDEX"
 
-    status -n .
-    let PICTURES++
+    if [ $(( $IDX % 10 )) == 9 ]; then
+	status -n $(( $IDX + 1 ))
+    else
+	status -n .
+    fi
 
 done
+
 echo '</p>'
 echo '<!--'
-echo PICTURES=$PICTURES
+echo PICTURES=${#FILES[*]}
 echo SUBDIRS=$SUBDIRS
 echo DATE=`date +%Y%m%d%H%M%S`
 echo '-->'
 
 html_foot
 
-status $PICTURES
-
-if [ $PICTURES -eq 0 ] ; then
+if [ ${#FILES[*]} == 0 ] ; then
     rmdir "$SUBDIR"
 fi
 
