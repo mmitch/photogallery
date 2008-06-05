@@ -148,7 +148,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	case "$EXT" in
 	    
 	    gif|jpeg|jpg|JPG|png|tif|tiff)
-		convert -scale $MEDIUM "$FILE" "$SUBDIR/$M_FILE"
+		convert -resize $MEDIUM "$FILE" "$SUBDIR/$M_FILE"
 		;;
 	    
 	    pef|PEF)
@@ -160,7 +160,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 			270)  FLIP=5 ;;
 		    esac
 		fi
-		dcraw -c -w -o1 -h -t $FLIP "$FILE" | convert -scale $MEDIUM ppm:- "$SUBDIR/$M_FILE"
+		dcraw -c -w -o1 -h -t $FLIP "$FILE" | convert -resize $MEDIUM ppm:- "$SUBDIR/$M_FILE"
 		;;
 	    
 	    *)
@@ -170,7 +170,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	esac
     fi
 
-    [ -s "$SUBDIR/$S_FILE" ] || convert -scale $SMALL "$SUBDIR/$M_FILE" "$SUBDIR/$S_FILE"
+    [ -s "$SUBDIR/$S_FILE" ] || convert -resize $SMALL "$SUBDIR/$M_FILE" "$SUBDIR/$S_FILE"
 
     chmod --reference="$FILE" "$SUBDIR/$M_FILE"
     chmod --reference="$FILE" "$SUBDIR/$S_FILE"
