@@ -25,7 +25,10 @@
 # Basic CSS support is available:
 # The environment variables $GALLERYCSS and $THUMBCSS are evaluated
 # and directly included in the generated HTML files.  Tag IDs are
-# #nav, #pic, #sig and #txt.
+# #nav, #pic, #sig and #txt.  In a gallery, you can also set img.txt
+# and img.notxt to distinguish pictures with comments from those
+# tihous.
+#
 # Example:
 # GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
 #
@@ -197,11 +200,20 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
     fi
     ALTTEXT=$( echo "$ALTTEXT" | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g' )
 
-    if [ "$FILETEXT" ] ; then
-	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=3 alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+    if [ "$GALLERYCSS" ] ; then
+	if [ "$FILETEXT" ] ; then
+	    INSERT='class="txt"'
+	else
+	    INSERT='class="notxt"'
+	fi
     else
-	echo "<a href=\"$SUBDIR/$M_INDEX\"><img border=1 alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+	if [ "$FILETEXT" ] ; then
+	    INSERT=3
+	else
+	    INSERT=1
+	fi
     fi
+    echo "<a href=\"$SUBDIR/$M_INDEX\"><img $INSERT alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
 
     (
 	html_head "$THUMBCSS"
