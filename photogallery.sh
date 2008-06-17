@@ -121,9 +121,15 @@ echo '</p>'
 status -n "$SUBDIRS "
 
 if [ -e README ] ; then
-    echo '<p id="txt">'
-    cat < README
-    echo '</p>'
+    if [ "$GALLERYCSS" ] ; then
+	echo '<div id="txt">'
+	cat < README
+	echo '</div>'
+    else
+	echo '<p id="txt">'
+	cat < README
+	echo '</p>'
+    fi
 fi
 
 mkdir -p "$SUBDIR" || exit 1
@@ -234,7 +240,13 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	echo "</p>"
 	echo "<p id=\"pic\"><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 
-	[ "$FILETEXT" ] && echo "<p id=\"txt\">${FILETEXT}</p>"
+	if [ "$FILETEXT" ] ; then
+	    if [ "$THUMBCSS" ] ; then
+		echo "<div id=\"txt\">${FILETEXT}</div>"
+	    else
+		echo "<p id=\"txt\">${FILETEXT}</p>"
+	    fi
+	fi
 
 	html_foot
 	
