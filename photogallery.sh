@@ -52,6 +52,9 @@ SMALL=20%
 SUBDIR=.webthumbs
 INDEX=index.html
 
+GALLERYCSS=
+THUMBCSS=
+
 #### function declarations
 
 status() {
@@ -59,9 +62,15 @@ status() {
 }
 
 html_head() {
+    CSS="$1"
     echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">'
     echo '<html><head>'
     echo "<title>$TITLE</title>"
+    if [ "$CSS" ] ; then
+	echo '<style type="text/css"><!--'
+	echo $CSS
+	echo '--></style>'
+    fi
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\" />"
     echo '</head><body>'
 }
@@ -74,7 +83,7 @@ html_foot() {
 
 exec > $INDEX
 
-html_head
+html_head "$GALLERYCSS"
 
 if [ -r "../$INDEX" ] ; then
     echo -n "<p><a href=\"../$INDEX\">[ up ]</a>"
@@ -191,7 +200,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
     fi
 
     (
-	html_head
+	html_head "$THUMBCSS"
 	echo -n "<p>"
 	PREV=$(( $IDX - 1 ))
 	NEXT=$(( $IDX + 1 ))
