@@ -22,6 +22,13 @@
 # the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
 # thumbnail subfolder before you can run photogallery.sh again.
 #
+# Basic CSS support is available:
+# The environment variables $GALLERYCSS and $THUMBCSS are evaluated
+# and directly included in the generated HTML files.  Tag IDs are
+# #nav, #pic, #sig and #txt.
+# Example:
+# GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
+#
 # To generate lots of galleries in subdirectories use this (only
 # works if there are no line breaks in your directory names):
 # 
@@ -52,9 +59,6 @@ SMALL=20%
 SUBDIR=.webthumbs
 INDEX=index.html
 
-GALLERYCSS=
-THUMBCSS=
-
 #### function declarations
 
 status() {
@@ -76,7 +80,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/photogallery.git">photogallery.sh</a></i></small></small></p></body></html>'
+    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/photogallery.git">photogallery.sh</a></i></small></small></p></body></html>'
 }
 
 #### main script
@@ -86,9 +90,9 @@ exec > $INDEX
 html_head "$GALLERYCSS"
 
 if [ -r "../$INDEX" ] ; then
-    echo -n "<p><a href=\"../$INDEX\">[ up ]</a>"
+    echo -n "<p id=\"nav\"><a href=\"../$INDEX\">[ up ]</a>"
 else
-    echo -n '<p><a href="..">[ up ]</a>'
+    echo -n '<p id="nav"><a href="..">[ up ]</a>'
 fi
 
 SUBDIRS=0
@@ -114,14 +118,14 @@ echo '</p>'
 status -n "$SUBDIRS "
 
 if [ -e README ] ; then
-    echo '<p>'
+    echo '<p id="txt">'
     cat < README
     echo '</p>'
 fi
 
 mkdir -p "$SUBDIR" || exit 1
 
-echo '<p>'
+echo '<p id="pic">'
 
 declare -a FILES
 for FILE in *; do
@@ -201,7 +205,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 
     (
 	html_head "$THUMBCSS"
-	echo -n "<p>"
+	echo -n "<p id=\"nav\">"
 	PREV=$(( $IDX - 1 ))
 	NEXT=$(( $IDX + 1 ))
 	if [ $IDX -gt 0 ] ; then
@@ -216,9 +220,9 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	    echo "&gt;&gt;</p>"
 	fi
 	echo "</p>"
-	echo "<p><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
+	echo "<p id=\"pic\"><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
 
-	[ "$FILETEXT" ] && echo "<p>${FILETEXT}</p>"
+	[ "$FILETEXT" ] && echo "<p id=\"txt\">${FILETEXT}</p>"
 
 	html_foot
 	
