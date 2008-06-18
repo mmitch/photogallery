@@ -79,7 +79,7 @@ html_head() {
 	echo '--></style>'
     fi
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\" />"
-    echo '</head><body>'
+    echo '</head>'
 }
 
 html_foot() {
@@ -91,6 +91,7 @@ html_foot() {
 exec > $INDEX
 
 html_head "$GALLERYCSS"
+echo '<body>'
 
 if [ -r "../$INDEX" ] ; then
     echo -n "<p id=\"nav\"><a href=\"../$INDEX\">[ up ]</a>"
@@ -223,6 +224,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 
     (
 	html_head "$THUMBCSS"
+	echo '<body onLoad="document.getElementById('"'next'"').focus();">'
 	echo -n "<p id=\"nav\">"
 	PREV=$(( $IDX - 1 ))
 	NEXT=$(( $IDX + 1 ))
@@ -233,7 +235,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	fi
 	echo " &nbsp; <a href=\"../$INDEX\">back</a> &nbsp; "
 	if [ $NEXT -lt ${#FILES[*]} ] ; then
-	    echo "<a href=\"${FILES[${NEXT}]}_m.html\">&gt;&gt;</a></p>"
+	    echo "<a id=\"next\" href=\"${FILES[${NEXT}]}_m.html\">&gt;&gt;</a></p>"
 	else
 	    echo "&gt;&gt;</p>"
 	fi
