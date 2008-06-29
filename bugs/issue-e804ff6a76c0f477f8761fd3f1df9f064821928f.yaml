@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: release complete suite on website
+desc: do a proper release of all files on my website
+type: :task
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-06-29 20:51:58.168517 Z
+references: []
+
+id: e804ff6a76c0f477f8761fd3f1df9f064821928f
+log_events: 
+- - 2008-06-29 20:52:00.313790 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

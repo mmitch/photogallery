@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: unifiy configuration variables shell/perl
+desc: is this useful?  look into it
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-06-29 20:52:33.293931 Z
+references: []
+
+id: 0aa63589aa0b6a038c0b4f2c37cc92cc72c8b761
+log_events: 
+- - 2008-06-29 20:52:44.860341 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
