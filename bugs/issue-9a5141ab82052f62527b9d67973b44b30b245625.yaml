@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add image comment editor
+desc: write a simple editor for image comments
+type: :feature
+component: photogallery
+release: v1.25
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :in_progress
+disposition: 
+creation_time: 2008-06-29 20:54:28.082451 Z
+references: []
+
+id: 9a5141ab82052f62527b9d67973b44b30b245625
+log_events: 
+- - 2008-06-29 20:54:29.595843 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-06-29 20:57:20.008906 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
+  - ""
