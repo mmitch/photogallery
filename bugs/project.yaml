@@ -1,0 +1,16 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: photogallery
+version: "0.3"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: photogallery
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: v1.25
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-06-29 20:47:10.200581 Z
+    - Christian Garbs <mitch@cgarbs.de>
+    - created
+    - ""
