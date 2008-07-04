@@ -1,16 +1,55 @@
 #!/bin/sh
 #
+# 2008 (c) by Christian Garbs <mitch@cgarbs.de>
+#
 # edit comments for photogallery.sh gallery
+#
 
-TEMP=$(mktemp)
+TEMP1=$(mktemp)
+TEMP2=$(mktemp)
 
+# usage note
+if [ "${*}" = "" ] ; then
+    echo "usage: editcomments.sh FILE..."
+    exit 1
+fi
+
+# collect files and comments
 for FILE in "${@}"; do
+    if [ -e "$FILE" ] ; then
+	echo "====$FILE"
+	[ -e "$FILE.text" ] && cat "$FILE.text"
+    fi
+done > $TEMP1
 
-    echo "====$FILE"
-    [ -e "$FILE.text" ] && cat "$FILE"
+# edit list
+if [ ! -s $TEMP1 ] ; then
+    echo "no files found"
+    exit 1
+fi
+$EDITOR $TEMP1
 
-done > $TEMP
+# add end mark
+echo "====" >> $TEMP1
 
-$EDITOR $TEMP
+# split list into files
+touch $TEMP2
+while read LINE ; do
 
-rm $TEMP
+        if [ "${LINE:0:4}" = '====' ] ; then
+	    rm -f "$FILENAME"
+	    [ -s $TEMP2 ] && mv $TEMP2 "$FILENAME"
+	    touch $TEMP2
+		
+	    FILENAME="${LINE:4}"
+	    if [ ! -e "${FILENAME}" -a "$FILENAME" ] ; then
+		echo "skipping file $FILENAME: does not exist"
+	    fi
+	    FILENAME="${FILENAME}.text"
+	else
+	    echo $LINE >> $TEMP2
+	fi
+
+done < $TEMP1
+
+rm $TEMP1 $TEMP2
