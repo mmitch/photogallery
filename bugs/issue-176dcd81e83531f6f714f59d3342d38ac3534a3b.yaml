@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: import EXIF data to picture comments
+desc: write a simple script that gathers EXIF data from the files and adds it to the picture comments
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-06 14:44:51.760504 Z
+references: []
+
+id: 176dcd81e83531f6f714f59d3342d38ac3534a3b
+log_events: 
+- - 2008-07-06 14:44:52.829112 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
