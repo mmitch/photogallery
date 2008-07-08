@@ -62,6 +62,8 @@ SMALL=20%
 SUBDIR=.webthumbs
 INDEX=index.html
 
+VERSION=1.25
+
 #### function declarations
 
 status() {
@@ -83,7 +85,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/photogallery.git">photogallery.sh</a></i></small></small></p></body></html>'
+    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/cgi-bin/gitweb.cgi/photogallery.git">photogallery.sh v${VERSION}</a></i></small></small></p></body></html>'
 }
 
 #### main script
