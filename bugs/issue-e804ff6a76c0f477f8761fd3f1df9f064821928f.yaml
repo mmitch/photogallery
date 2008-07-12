@@ -3,7 +3,7 @@ title: release complete suite on website
 desc: do a proper release of all files on my website
 type: :task
 component: photogallery
-release: 
+release: v1.26
 reporter: Christian Garbs <mitch@cgarbs.de>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2008-06-29 20:52:00.313790 Z
   - Christian Garbs <mitch@cgarbs.de>
   - created
+  - ""
+- - 2008-07-12 22:27:47.069169 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - assigned to release v1.26 from unassigned
   - ""

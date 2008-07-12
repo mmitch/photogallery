@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: create proper release
+desc: add README, clearly state license, add Makefile
+type: :feature
+component: photogallery
+release: v1.26
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-12 22:25:55.497310 Z
+references: []
+
+id: 7f93c9ef21418b9e24b5c3bc7af3e554fdad7012
+log_events: 
+- - 2008-07-12 22:25:56.525213 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
