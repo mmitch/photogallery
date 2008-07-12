@@ -3,6 +3,7 @@
 # list changes within photogallery.sh directory structure
 #
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
+# licensed under GNU GPL v2
 #
 
 use strict;

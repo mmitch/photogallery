@@ -2,7 +2,7 @@
 #
 # simple static photogallery script
 # 2007-2008 (c) by Christian Garbs <mitch@cgarbs.de>
-# licensed under GNU GPL
+# licensed under GNU GPL v2
 
 #
 # usage:

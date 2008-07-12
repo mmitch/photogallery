@@ -3,6 +3,7 @@
 # 2008 (c) by Christian Garbs <mitch@cgarbs.de>
 #
 # edit comments for photogallery.sh gallery
+# licensed under GNU GPL v2
 #
 
 TEMP1=$(mktemp)

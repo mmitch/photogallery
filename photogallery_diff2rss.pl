@@ -3,6 +3,7 @@
 # converts photogallery.sh changes to HTML page
 #
 # 2007 (c) by Christian Garbs <mitch@cgarbs.de>
+# licensed under GNU GPL v2
 #
 
 use strict;

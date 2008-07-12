@@ -5,7 +5,7 @@ type: :feature
 component: photogallery
 release: v1.26
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2008-07-12 22:25:55.497310 Z
 references: []
@@ -15,4 +15,8 @@ log_events:
 - - 2008-07-12 22:25:56.525213 Z
   - Christian Garbs <mitch@cgarbs.de>
   - created
+  - ""
+- - 2008-07-12 22:27:08.892120 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
   - ""
