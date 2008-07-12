@@ -17,5 +17,5 @@ dist:	clean
 	tar -czvf $(TGZ) $(DIR)
 
 clean:
-	rm -rf $(DIR)
-
+	rm -rf $(DIR) $(TGZ)
+	rm -rf *~
