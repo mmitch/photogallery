@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: support for Debian packaging
+desc: rename scripts, remove .sh and .pl
+type: :feature
+component: photogallery
+release: v1.27
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-12 22:56:10.047602 Z
+references: []
+
+id: 153f04af4708efa15406306624940ce203c224cb
+log_events: 
+- - 2008-07-12 22:56:11.480617 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""

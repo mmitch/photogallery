@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: create Debian package
+desc: ""
+type: :task
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-12 22:56:39.938549 Z
+references: []
+
+id: e5f60eec17509dced32b021c32763abaf5c29b71
+log_events: 
+- - 2008-07-12 22:56:41.587742 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
