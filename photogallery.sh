@@ -62,7 +62,7 @@ SMALL=20%
 SUBDIR=.webthumbs
 INDEX=index.html
 
-VERSION=1.26
+VERSION=1.26git
 
 #### function declarations
 
