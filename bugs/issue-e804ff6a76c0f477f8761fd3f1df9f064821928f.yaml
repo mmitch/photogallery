@@ -5,8 +5,8 @@ type: :task
 component: photogallery
 release: v1.26
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-06-29 20:51:58.168517 Z
 references: []
 
@@ -19,4 +19,8 @@ log_events:
 - - 2008-07-12 22:27:47.069169 Z
   - Christian Garbs <mitch@cgarbs.de>
   - assigned to release v1.26 from unassigned
+  - ""
+- - 2008-07-13 17:03:22.833016 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed issue with disposition fixed
   - ""
