@@ -85,7 +85,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery.sh v${VERSION}</a></i></small></small></p></body></html>'
+    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery.sh '"v${VERSION}</a></i></small></small></p></body></html>"
 }
 
 #### main script
