@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # 2008 (c) by Christian Garbs <mitch@cgarbs.de>
 #
