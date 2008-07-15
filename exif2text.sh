@@ -18,4 +18,7 @@ for FILE in "${@}"; do
 	[ "$A" ] && echo -n "${SEP}" && echo -n "1:${A}" && SEP=', '
 	[ "$SEP" ] && echo
     ) >> "${FILE}.text"
+    
+    echo -n "."
 done
+echo
