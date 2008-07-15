@@ -11,6 +11,10 @@ The other scripts are addons:
 editcomments.sh:
 Conveniently edit picture comments.  Give the pictures as parameters.
 
+exif2text.sh:
+Include standard EXIF tags in picture comments.  Give the pictures as
+parameters.
+
 photogallery_diff.pl:
 List changes within photogallery.sh directory structure.
 Configuration is read from ~/.photogallery-conf.pl, see
