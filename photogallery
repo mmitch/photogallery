@@ -6,7 +6,7 @@
 
 #
 # usage:
-#    photogallery.sh [gallerytitle]
+#    photogallery [gallerytitle]
 #
 # Run this script inside a directory with pictures.
 # It will generate a subfolder (set via $SUBDIR) with some thumbnails
@@ -20,7 +20,7 @@
 # 
 # Already existing thumbnails will not be overwritten.  If you change
 # the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
-# thumbnail subfolder before you can run photogallery.sh again.
+# thumbnail subfolder before you can run photogallery again.
 #
 # Basic CSS support is available:
 # The environment variables $GALLERYCSS and $THUMBCSS are evaluated
@@ -36,7 +36,7 @@
 # works if there are no line breaks in your directory names):
 # 
 #   find . -depth \! -name .\* -type d | \
-#   while read DIR; do ( echo "$DIR"; cd "$DIR"; photogallery.sh ) ; done
+#   while read DIR; do ( echo "$DIR"; cd "$DIR"; photogallery ) ; done
 #
 # If you want to browse your galleries directly from your filesystem
 # without a webserver, you have to run this twice so that all links
@@ -85,7 +85,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery.sh '"v${VERSION}</a></i></small></small></p></body></html>"
+    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery '"v${VERSION}</a></i></small></small></p></body></html>"
 }
 
 #### main script
