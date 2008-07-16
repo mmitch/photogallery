@@ -33,12 +33,16 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: v1.27
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-07-16 20:36:03.416935 Z
   log_events: 
   - - 2008-07-12 22:55:10.764922 Z
     - Christian Garbs <mitch@cgarbs.de>
     - created
+    - ""
+  - - 2008-07-16 20:36:03.416967 Z
+    - Christian Garbs <mitch@cgarbs.de>
+    - released
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: v1.28

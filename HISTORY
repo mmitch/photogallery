@@ -1,11 +1,12 @@
 photogallery HISTORY
 
 
-photogallery
+photogallery v1.27 - 2008-07-16
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - fix inclusion of version number in gallery footer
 - add 'exif2text' to include EXIF tags in comments
+- rename scripts to allow proper Debian packaging
 
 
 photogallery v1.26 - 2008-07-13
