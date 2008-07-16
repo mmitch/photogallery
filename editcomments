@@ -2,7 +2,7 @@
 #
 # 2008 (c) by Christian Garbs <mitch@cgarbs.de>
 #
-# edit comments for photogallery.sh gallery
+# edit comments for photogallery gallery
 # licensed under GNU GPL v2
 #
 
@@ -11,7 +11,7 @@ TEMP2=$(mktemp)
 
 # usage note
 if [ "${*}" = "" ] ; then
-    echo "usage: editcomments.sh FILE..."
+    echo "usage: editcomments FILE..."
     exit 1
 fi
 

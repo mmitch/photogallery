@@ -5,7 +5,7 @@ photogallery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - fix inclusion of version number in gallery footer
-- add 'exif2text.sh' to include EXIT tags in comments
+- add 'exif2text' to include EXIF tags in comments
 
 
 photogallery v1.26 - 2008-07-13
