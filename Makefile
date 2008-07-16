@@ -4,7 +4,7 @@ TGZ=photogallery-$(VERSION).tar.gz
 
 DOCS=HISTORY README photogallery-conf.pl.sample
 PERL=photogallery_diff2rss photogallery_diff2html photogallery_diff
-BASH=photogallery editcomments.sh
+BASH=photogallery editcomments.sh exif2text
 
 dist:	clean
 	mkdir -p $(DIR)
