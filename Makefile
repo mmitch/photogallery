@@ -1,10 +1,10 @@
-VERSION=$(shell grep ^VERSION= photogallery.sh | sed s/^VERSION=//)
+VERSION=$(shell grep ^VERSION= photogallery | sed s/^VERSION=//)
 DIR=photogallery-$(VERSION)/
 TGZ=photogallery-$(VERSION).tar.gz
 
 DOCS=HISTORY README photogallery-conf.pl.sample
-PERL=photogallery_diff2rss.pl photogallery_diff2html.pl photogallery_diff.pl
-BASH=photogallery.sh editcomments.sh
+PERL=photogallery_diff2rss photogallery_diff2html photogallery_diff
+BASH=photogallery editcomments.sh
 
 dist:	clean
 	mkdir -p $(DIR)
