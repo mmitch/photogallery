@@ -5,8 +5,8 @@ type: :task
 component: photogallery
 release: 
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-12 22:56:39.938549 Z
 references: []
 
@@ -20,3 +20,9 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - changed status from unstarted to in_progress
   - ""
+- - 2008-07-19 09:29:49.940057 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed issue with disposition fixed
+  - |-
+    package is released, see here:
+    http://www.mitch.h.shuttle.de/stuff/deb-repository.html#photogallery
