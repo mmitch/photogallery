@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: handle animated GIFs properly
+desc: Converting an animated GIF results in multiple numbered output files that have unexpected filenames, resulting in a "file not found" error.
+type: :bugfix
+component: photogallery
+release: v1.28
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2008-09-16 16:21:05.915794 Z
+references: []
+
+id: 97a5456587110735d7a08d3ca61d823778781493
+log_events: 
+- - 2008-09-16 16:21:06.532813 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-09-16 16:22:31.552367 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""
