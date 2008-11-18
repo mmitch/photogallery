@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: include ISO in exif2text
+desc: include the ISO value in the generated text
+type: :feature
+component: photogallery
+release: v1.28
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2008-11-18 22:22:08.178060 Z
+references: []
+
+id: ca23a93678fcf0ae9befbe85ec8bee5faa524479
+log_events: 
+- - 2008-11-18 22:22:08.943609 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-11-18 22:28:58.442675 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""

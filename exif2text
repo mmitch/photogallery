@@ -11,11 +11,13 @@ for FILE in "${@}"; do
 	F=$(exiftool -q -s -s -s -FocalLength   "${FILE}")
 	A=$(exiftool -q -s -s -s -ApertureValue "${FILE}")
 	E=$(exiftool -q -s -s -s -ExposureTime  "${FILE}")
+	I=$(exiftool -q -s -s -s -ISO           "${FILE}")
     
 	SEP=''
 	[ "$F" ] && echo -n "f=${F}" && SEP=', '
 	[ "$E" ] && echo -n "${SEP}" && echo -n "${E}s" && SEP=', '
 	[ "$A" ] && echo -n "${SEP}" && echo -n "1:${A}" && SEP=', '
+	[ "$I" ] && echo -n "${SEP}" && echo -n "ISO ${I}" && SEP=', '
 	[ "$SEP" ] && echo
     ) >> "${FILE}.text"
     
