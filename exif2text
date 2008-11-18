@@ -7,11 +7,15 @@
 #
 
 for FILE in "${@}"; do
+
+    exiftool -q -s -s -FocalLength -ApertureValue -ExposureTime -ISO "${FILE}" | 
     (
-	F=$(exiftool -q -s -s -s -FocalLength   "${FILE}")
-	A=$(exiftool -q -s -s -s -ApertureValue "${FILE}")
-	E=$(exiftool -q -s -s -s -ExposureTime  "${FILE}")
-	I=$(exiftool -q -s -s -s -ISO           "${FILE}")
+	while read KEY VAL; do
+	    [ "${KEY}" = 'FocalLength:'   ] && F="${VAL}"
+	    [ "${KEY}" = 'ApertureValue:' ] && A="${VAL}"
+	    [ "${KEY}" = 'ExposureTime:'  ] && E="${VAL}"
+	    [ "${KEY}" = 'ISO:'           ] && I="${VAL}"
+	done
     
 	SEP=''
 	[ "$F" ] && echo -n "f=${F}" && SEP=', '
