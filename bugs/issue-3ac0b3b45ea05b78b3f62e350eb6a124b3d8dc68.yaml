@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: urlencode special characters
+desc: URLs are not clean (unencoded spaces, unencoded umlauts, ...)
+type: :bugfix
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-18 23:15:15.200558 Z
+references: []
+
+id: 3ac0b3b45ea05b78b3f62e350eb6a124b3d8dc68
+log_events: 
+- - 2008-11-18 23:15:15.886023 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
