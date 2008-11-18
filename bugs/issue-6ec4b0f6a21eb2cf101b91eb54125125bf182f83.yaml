@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: speed up exif2text
+desc: currently exiftool is called four times for every picture, this is sloooooow
+type: :bugfix
+component: photogallery
+release: v1.28
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-11-18 22:25:57.474607 Z
+references: []
+
+id: 6ec4b0f6a21eb2cf101b91eb54125125bf182f83
+log_events: 
+- - 2008-11-18 22:25:59.183307 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
