@@ -181,7 +181,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 
 	    mpg|mpeg)
 		TMPDIR=$(mktemp -d -p.) || exit 1
-		mplayer -vo jpeg:outdir="$TMPDIR" -ao null -frames 1 "${FILE}" >/dev/null 2>&1
+		mplayer -vo jpeg:outdir="$TMPDIR" -ao null -zoom -frames 1 "${FILE}" >/dev/null 2>&1
 		convert -resize $MEDIUM -sharpen 1x0.5 "${TMPDIR}/00000001.jpg" "$SUBDIR/$M_FILE"
 		rm "$TMPDIR/00000001.jpg"
 		rmdir "$TMPDIR"
