@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: support video files
+desc: grab first frame using mplayer, start with mpeg as this is currently needed
+type: :feature
+component: photogallery
+release: v1.28
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :in_progress
+disposition: 
+creation_time: 2008-12-19 19:21:08.711256 Z
+references: []
+
+id: 02449e9c2609a1eda3af00df52b6d09c0fa07635
+log_events: 
+- - 2008-12-19 19:21:09.435770 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-12-19 19:21:28.830481 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
+  - ""
