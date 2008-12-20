@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add overview files for videos
+desc: instead of just the first frame, create an image gallery of screencaps every n seconds for the medium sized image
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-20 09:51:09.191226 Z
+references: []
+
+id: 6e6680a63f73dadcd633dd36d49c4c6d55a837a1
+log_events: 
+- - 2008-12-20 09:51:09.832246 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
