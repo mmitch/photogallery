@@ -3,9 +3,9 @@ title: urlencode special characters
 desc: URLs are not clean (unencoded spaces, unencoded umlauts, ...)
 type: :bugfix
 component: photogallery
-release: 
+release: v1.28
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2008-11-18 23:15:15.200558 Z
 references: []
@@ -15,4 +15,12 @@ log_events:
 - - 2008-11-18 23:15:15.886023 Z
   - Christian Garbs <mitch@cgarbs.de>
   - created
+  - ""
+- - 2008-12-21 14:51:09.926306 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
+  - "uriencode in bash: see de.comp.os.unix.shell news:gill2r$4dr$1@yggdrasil.mitch.h.shuttle.de"
+- - 2008-12-21 14:51:28.068213 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - assigned to release v1.28 from unassigned
   - ""
