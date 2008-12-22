@@ -106,7 +106,7 @@ html_head() {
 }
 
 html_foot() {
-    echo '<p id="sig"><small><small><i>generated on ' "$(LANG=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery '"v${VERSION}</a></i></small></small></p></body></html>"
+    echo '<p id="sig"><small><small><i>generated on ' "$(LC_ALL=${DATELANG} date)" 'by <a href="http://www.cgarbs.de/photogallery.en.html">photogallery '"v${VERSION}</a></i></small></small></p></body></html>"
 }
 
 #### main script
@@ -250,9 +250,9 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	fi
     else
 	if [ "$FILETEXT" ] ; then
-	    INSERT=3
+	    INSERT='border=3'
 	else
-	    INSERT=1
+	    INSERT='border=1'
 	fi
     fi
 
