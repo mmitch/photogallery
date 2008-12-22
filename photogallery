@@ -71,6 +71,26 @@ status() {
     echo "$@" 1>&2
 }
 
+uriencode()
+{
+    local INPUT OUTPUT CHAR POS LANG
+    INPUT="$1"
+    LANG=C
+
+    for (( POS=0 ; ${POS} < ${#INPUT} ; POS=(( ${POS} + 1)) )); do
+        CHAR="${INPUT:$POS:1}"
+
+        if [[ "${CHAR}" =~ "[0-9a-zA-Z()\'*~\\!./_-]" ]]; then
+            OUTPUT="${OUTPUT}${CHAR}"
+        else
+            ORD=$(( $(printf '%d' "'$CHAR") & 255 ))
+            OUTPUT="${OUTPUT}%$(printf %0x ${ORD})"
+        fi
+    done
+
+    URIENCODE="${OUTPUT}"
+}
+
 html_head() {
     CSS="$1"
     echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml1.dtd">'
@@ -97,7 +117,8 @@ html_head "$GALLERYCSS"
 echo '<body>'
 
 if [ -r "../$INDEX" ] ; then
-    echo -n "<p id=\"nav\"><a href=\"../$INDEX\">[ up ]</a>"
+    uriencode "../$INDEX"
+    echo -n "<p id=\"nav\"><a href=\"${URIENCODE}\">[ up ]</a>"
 else
     echo -n '<p id="nav"><a href="..">[ up ]</a>'
 fi
@@ -111,10 +132,11 @@ for DIR in *; do
 
     echo '<br />'
     if [ -r "$DIR/$INDEX" ] ; then
-	echo -n "<a href=\"$DIR/$INDEX\">$DIR/</a>"
+	uriencode "$DIR/$INDEX"
     else
-	echo -n "<a href=\"$DIR\">$DIR/</a>"
+	uriencode "$DIR"
     fi
+    echo -n "<a href=\"${URIENCODE}\">$DIR/</a>"
 
     status -n :
     let SUBDIRS++
@@ -233,7 +255,11 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	    INSERT=1
 	fi
     fi
-    echo "<a href=\"$SUBDIR/$M_INDEX\"><img $INSERT alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"
+
+    uriencode "$SUBDIR/$M_INDEX"
+    echo -n "<a href=\"${URIENCODE}\">"
+    uriencode "$SUBDIR/$S_FILE"
+    echo "<img $INSERT alt=\"\" title=\"$ALTTEXT\" src=\"${URIENCODE}\" /></a>"
 
     (
 	html_head "$THUMBCSS"
@@ -242,18 +268,24 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	PREV=$(( $IDX - 1 ))
 	NEXT=$(( $IDX + 1 ))
 	if [ $IDX -gt 0 ] ; then
-	    echo -n "<p><a href=\"${FILES[${PREV}]}_m.html\">&lt;&lt;</a>"
+	    uriencode "${FILES[${PREV}]}_m.html"
+	    echo -n "<p><a href=\"${URIENCODE}\">&lt;&lt;</a>"
 	else
 	    echo -n "<p>&lt;&lt;"
 	fi
-	echo " &nbsp; <a href=\"../$INDEX\">back</a> &nbsp; "
+	uriencode "../$INDEX"
+	echo " &nbsp; <a href=\"${URIENCODE}\">back</a> &nbsp; "
 	if [ $NEXT -lt ${#FILES[*]} ] ; then
-	    echo "<a id=\"next\" href=\"${FILES[${NEXT}]}_m.html\">&gt;&gt;</a></p>"
+	    uriencode "${FILES[${NEXT}]}_m.html"
+	    echo "<a id=\"next\" href=\"${URIENCODE}\">&gt;&gt;</a></p>"
 	else
 	    echo "&gt;&gt;</p>"
 	fi
 	echo "</p>"
-	echo "<p id=\"pic\"><a href=\"../$FILE\"><img alt=\"$FILE\" src=\"$M_FILE\" /></a></p>"
+	uriencode "../$FILE"
+	echo -n "<p id=\"pic\"><a href=\"${URIENCODE}\">"
+	uriencode "$M_FILE"
+	echo "<img alt=\"$FILE\" src=\"${URIENCODE}\" /></a></p>"
 
 	if [ "$FILETEXT" ] ; then
 	    if [ "$THUMBCSS" ] ; then

@@ -5,8 +5,8 @@ type: :bugfix
 component: photogallery
 release: v1.28
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-11-18 23:15:15.200558 Z
 references: []
 
@@ -23,4 +23,8 @@ log_events:
 - - 2008-12-21 14:51:28.068213 Z
   - Christian Garbs <mitch@cgarbs.de>
   - assigned to release v1.28 from unassigned
+  - ""
+- - 2008-12-22 22:12:44.315173 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
   - ""
