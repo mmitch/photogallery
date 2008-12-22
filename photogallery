@@ -228,9 +228,9 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	fi
     else
 	if [ "$FILETEXT" ] ; then
-	    INSERT=3
+	    INSERT='border=3'
 	else
-	    INSERT=1
+	    INSERT='border=1'
 	fi
     fi
     echo "<a href=\"$SUBDIR/$M_INDEX\"><img $INSERT alt=\"\" title=\"$ALTTEXT\" src=\"$SUBDIR/$S_FILE\" /></a>"

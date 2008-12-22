@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: broken HTML without CSS
+desc: <img> contains "1" or "3" instead of "border=1" and "border=3" then no CSS is set
+type: :bugfix
+component: photogallery
+release: v1.28
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2008-12-22 21:57:41.627896 Z
+references: []
+
+id: 344d9f5bf7489b7b579e2fc005b5eedef1839816
+log_events: 
+- - 2008-12-22 21:57:42.942405 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2008-12-22 21:57:53.044204 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2008-12-22 21:58:23.686462 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""
