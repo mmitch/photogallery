@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: include EXIF and IPTC comments
+desc: include picture comments as default values in the editcomments script
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-26 08:58:34.227750 Z
+references: []
+
+id: 42c5734f2563ca3d67aecef300316de8c3473cb0
+log_events: 
+- - 2008-12-26 08:58:51.387460 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - "src: de.rec.fotografie news:ja54l4h5o80tnh530b8h9r467ll8dt9utq@4ax.com"
