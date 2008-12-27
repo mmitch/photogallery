@@ -7,8 +7,8 @@ type: :task
 component: photogallery
 release: v1.28
 reporter: Christian Garbs <mitch@cgarbs.de>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-16 20:26:55.628313 Z
 references: []
 
@@ -22,3 +22,7 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - assigned to release v1.28 from unassigned
   - ""
+- - 2008-12-27 20:18:12.437697 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - "change in plan: version number is taken from photogallery script, not from Makefile"

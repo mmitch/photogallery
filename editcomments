@@ -6,6 +6,7 @@
 # licensed under GNU GPL v2
 #
 
+VERSION=git
 TEMP1=$(mktemp)
 TEMP2=$(mktemp)
 

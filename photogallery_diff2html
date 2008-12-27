@@ -9,6 +9,8 @@
 use strict;
 use warnings;
 
+my $VERSION='git';
+
 # parse configuration file
 my %conf;
 eval(`cat ~/.photogallery-conf.pl`);

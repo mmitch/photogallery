@@ -6,6 +6,8 @@
 # licensed under GNU GPL v2
 #
 
+VERSION=git
+
 for FILE in "${@}"; do
 
     exiftool -q -s -s -FocalLength -ApertureValue -ExposureTime -ISO "${FILE}" | 

@@ -12,6 +12,8 @@ use warnings;
 use Digest::MD5 qw(md5_hex);
 use POSIX qw(strftime);
 
+my $VERSION='git';
+
 # parse configuration file
 my %conf;
 eval(`cat ~/.photogallery-conf.pl`);
