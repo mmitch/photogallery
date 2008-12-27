@@ -104,6 +104,4 @@ print "</ul>\n";
 my $date = `LANG=${conf{DATELANG}} date`;
 chomp $date;
 print "<p>(<a href=\"$conf{RSSURL}\">RSS feed</a>)</p>\n";
-print "<p><small><small><i>generated on $date by ";
-print '$Id: photogallery_diff2html.pl,v 1.7 2007-08-12 17:29:21 mitch Exp $';
-print "</i></small></small></p></body></html>\n";
+print "<p><small><small><i>generated on $date by photogallery_diff2html.pl ${VERSION}</i></small></small></p></body></html>\n";

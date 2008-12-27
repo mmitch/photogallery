@@ -72,8 +72,7 @@ print <<"EOF";
     <description>$conf{RSSTITLE}</description>
 EOF
 ;
-print '    <generator>$Id: photogallery_diff2rss.pl,v 1.4 2007-08-26 08:06:13 mitch Exp $</generator>';
-print "\n";
+print "    <generator>photogallery_diff2rss ${VERSION}</generator>\n";
 
 # print changes
 my $timezone = `date +%z`;
