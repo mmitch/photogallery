@@ -8,6 +8,12 @@
 
 VERSION=git
 
+# version number
+if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+    echo "exif2text (version ${VERSION})"
+    exit 1
+fi
+
 for FILE in "${@}"; do
 
     exiftool -q -s -s -FocalLength -ApertureValue -ExposureTime -ISO "${FILE}" | 

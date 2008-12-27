@@ -111,6 +111,12 @@ html_foot() {
 
 #### main script
 
+# version number
+if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+    echo "photogallery (version ${VERSION})"
+    exit 1
+fi
+
 exec > $INDEX
 
 html_head "$GALLERYCSS"

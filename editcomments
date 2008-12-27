@@ -10,6 +10,12 @@ VERSION=git
 TEMP1=$(mktemp)
 TEMP2=$(mktemp)
 
+# version number
+if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+    echo "editcomments (version ${VERSION})"
+    exit 1
+fi
+
 # usage note
 if [ "${*}" = "" ] ; then
     echo "usage: editcomments FILE..."
