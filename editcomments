@@ -16,9 +16,12 @@ if [ "$1" = "-v" -o "$1" = "--version" ] ; then
     exit 1
 fi
 
-# usage note
-if [ "${*}" = "" ] ; then
-    echo "usage: editcomments FILE..."
+# help text
+if [ "${*}" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
+    echo "Usage: editcomments [ -v | --version | -h | --help ] FILE..."
+    echo "Edit image comments for photogallery galleries."
+    echo "  -h, --help       show this help "
+    echo "  -v, --version    show version number"
     exit 1
 fi
 

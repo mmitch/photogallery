@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# converts photogallery changes to HTML page
+# converts photogallery changes to RSS file
 #
 # 2007-2008 (c) by Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2
@@ -14,10 +14,23 @@ use POSIX qw(strftime);
 
 my $VERSION='git';
 
-# version number
-if (defined $ARGV[0] and ($ARGV[0] eq '-v' or $ARGV[0] eq '--version')) {
-    print "photogallery_diff2rss (version ${VERSION})\n";
-    exit 1;
+if (defined $ARGV[0]) {
+
+    # version number
+    if ($ARGV[0] eq '-v' or $ARGV[0] eq '--version') {
+	print "photogallery_diff2rss (version ${VERSION})\n";
+	exit 1;
+    }
+
+    # help text
+    if ($ARGV[0] eq '-h' or $ARGV[0] eq '--help') {
+	print "Usage: photogallery_diff2rss [ -v | --version | -h | --help ]\n";
+	print "Convert photogallery changes to RSS file.\n";
+	print "  -h, --help       show this help\n";
+	print "  -v, --version    show version number\n";
+	exit 1;
+    }
+
 }
 
 # parse configuration file

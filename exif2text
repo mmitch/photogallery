@@ -14,6 +14,15 @@ if [ "$1" = "-v" -o "$1" = "--version" ] ; then
     exit 1
 fi
 
+# help text
+if [ "${*}" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
+    echo "Usage: exif2text [ -v | --version | -h | --help ] FILE..."
+    echo "Add exif tags to photogallery gallery comments."
+    echo "  -h, --help       show this help "
+    echo "  -v, --version    show version number"
+    exit 1
+fi
+
 for FILE in "${@}"; do
 
     exiftool -q -s -s -FocalLength -ApertureValue -ExposureTime -ISO "${FILE}" | 
