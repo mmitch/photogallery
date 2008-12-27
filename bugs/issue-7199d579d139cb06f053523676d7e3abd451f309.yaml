@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add manpages
+desc: Debian package build complains about missing manpages
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2008-12-27 22:33:55.696287 Z
+references: []
+
+id: 7199d579d139cb06f053523676d7e3abd451f309
+log_events: 
+- - 2008-12-27 22:33:56.175999 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
