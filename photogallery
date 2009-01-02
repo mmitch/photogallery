@@ -120,7 +120,7 @@ if [ "$1" = "-v" -o "$1" = "--version" ] ; then
 fi
 
 # help text
-if [ "${*}" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
+if [ "$1" = "-h" -o "$1" = "--help" ] ; then
     echo "Usage: exif2text [ -v | --version | -h | --help ] [gallerytitle]"
     echo "Generate a simple image gallery."
     echo "  -h, --help       show this help "
