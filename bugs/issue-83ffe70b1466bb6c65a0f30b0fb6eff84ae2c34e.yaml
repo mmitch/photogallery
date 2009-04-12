@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: don't print help text when no arguments are given
+desc: photogallery prints it's help text when called without any arguments
+type: :bugfix
+component: photogallery
+release: v1.29
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2009-04-12 10:51:41.110448 Z
+references: []
+
+id: 83ffe70b1466bb6c65a0f30b0fb6eff84ae2c34e
+log_events: 
+- - 2009-04-12 10:51:41.840294 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2009-04-12 10:51:53.166437 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""
