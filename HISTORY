@@ -1,6 +1,12 @@
 photogallery HISTORY
 
 
+photogallery v1.29 - 2009-04-12
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* bugfix: don't print help text when no arguments are given
+
+
 photogallery v1.28 - 2008-12-27
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
