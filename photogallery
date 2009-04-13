@@ -78,14 +78,16 @@ uriencode()
     LANG=C
 
     for (( POS=0 ; ${POS} < ${#INPUT} ; POS=(( ${POS} + 1)) )); do
-        CHAR="${INPUT:$POS:1}"
-
-        if [[ "${CHAR}" =~ "[0-9a-zA-Z()\'*~\\!./_-]" ]]; then
-            OUTPUT="${OUTPUT}${CHAR}"
-        else
-            ORD=$(( $(printf '%d' "'$CHAR") & 255 ))
-            OUTPUT="${OUTPUT}%$(printf %0x ${ORD})"
-        fi
+	CHAR="${INPUT:$POS:1}"
+	case "${CHAR}" in
+	    [0-9a-zA-Z\(\)\'*~\\!./_-])
+                OUTPUT="${OUTPUT}${CHAR}"
+		;;
+	    *)
+                ORD=$(( $(printf '%d' "'$CHAR") & 255 ))
+		OUTPUT="${OUTPUT}%$(printf %0x ${ORD})"
+		;;
+        esac
     done
 
     URIENCODE="${OUTPUT}"
