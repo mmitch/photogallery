@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: urlencoding wrong
+title: broken url encoding with bash 3.2
 desc: with Debian Lenny (bash 3.2) the uriencode function in the photogallery script wreaks havoc.  with bash 3.1 (Debian etch) everything was ok.
 type: :bugfix
 component: photogallery
@@ -20,3 +20,7 @@ log_events:
   - Christian Garbs <mitch@cgarbs.de>
   - changed status from unstarted to in_progress
   - see de.comp.os.unix.shell <grvs4k$hn5$1@yggdrasil.mitch.h.shuttle.de>
+- - 2009-04-13 21:14:09.053330 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - edited title
+  - ""
