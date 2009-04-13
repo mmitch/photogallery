@@ -1,6 +1,13 @@
 photogallery HISTORY
 
 
+photogallery v1.30 - 2009-04-13
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* bugfix: broken url encoding with bash 3.2
+* clarify copyright
+
+
 photogallery v1.29 - 2009-04-12
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
