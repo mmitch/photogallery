@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: use multiple CPUs
+desc: make use of multiple CPUs or kernels by converting multiple images in parallel
+type: :feature
+component: photogallery
+release: 
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :unstarted
+disposition: 
+creation_time: 2009-06-28 21:56:54.394429 Z
+references: []
+
+id: a04f4ad4bb1aa91e2514bdb3e25eb9b36c54bf11
+log_events: 
+- - 2009-06-28 21:56:55.926443 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
