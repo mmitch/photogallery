@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: convert Canon RAWs
+desc: support CR2 format (needs recent dcraw)
+type: :feature
+component: photogallery
+release: v1.31
+reporter: Christian Garbs <mitch@cgarbs.de>
+status: :closed
+disposition: :fixed
+creation_time: 2010-07-14 20:04:01.779603 Z
+references: []
+
+id: 01a67112343d45591dcf55e1be336ab089caa9f4
+log_events: 
+- - 2010-07-14 20:04:03.899456 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - created
+  - ""
+- - 2010-07-14 20:04:12.620541 Z
+  - Christian Garbs <mitch@cgarbs.de>
+  - closed with disposition fixed
+  - ""

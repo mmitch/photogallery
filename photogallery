@@ -245,9 +245,11 @@ for FILE in *; do
     case "$EXT" in 
 	gif|jpeg|jpg|JPG|png|tif|tiff)
 	    ;;
-	mpg|mpeg)
+	mpg|mpeg|mov|MOV)
 	    ;;
 	pef|PEF)
+	    ;;
+	cr2|CR2)
 	    ;;
 	*)
 	    continue
@@ -275,7 +277,7 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 		convert -resize $MEDIUM -sharpen 1x0.5 "${FILE}[0]" "$SUBDIR/$M_FILE"
 		;;
 
-	    mpg|mpeg)
+	    mpg|mpeg|mov|MOV)
 		TMPDIR=$(mktemp -d -p.) || exit 1
 		mplayer -vo jpeg:outdir="$TMPDIR" -ao null -zoom -frames 1 "${FILE}" >/dev/null 2>&1
 		convert -resize $MEDIUM -sharpen 1x0.5 "${TMPDIR}/00000001.jpg" "$SUBDIR/$M_FILE"
@@ -293,6 +295,10 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 		    esac
 		fi
 		dcraw -c -w -o1 -h -t $FLIP "$FILE" | convert -resize $MEDIUM -sharpen 1x0.5 ppm:- "$SUBDIR/$M_FILE"
+		;;
+	    
+	    cr2|CR2)
+		dcraw -c -w -o1 -h "$FILE" | convert -resize $MEDIUM -sharpen 1x0.5 ppm:- "$SUBDIR/$M_FILE"
 		;;
 	    
 	    *)
