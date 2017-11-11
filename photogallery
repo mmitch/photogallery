@@ -349,17 +349,17 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	NEXT=$(( $IDX + 1 ))
 	if [ $IDX -gt 0 ] ; then
 	    uriencode "${FILES[${PREV}]}_m.html"
-	    echo -n "<p><a href=\"${URIENCODE}\">&lt;&lt;</a>"
+	    echo -n "<a href=\"${URIENCODE}\">&lt;&lt;</a>"
 	else
-	    echo -n "<p>&lt;&lt;"
+	    echo -n "&lt;&lt;"
 	fi
 	uriencode "../$INDEX"
-	echo " &nbsp; <a href=\"${URIENCODE}\">back</a> &nbsp; "
+	echo -n " &nbsp; <a href=\"${URIENCODE}\">back</a> &nbsp; "
 	if [ $NEXT -lt ${#FILES[*]} ] ; then
 	    uriencode "${FILES[${NEXT}]}_m.html"
-	    echo "<a id=\"next\" href=\"${URIENCODE}\">&gt;&gt;</a></p>"
+	    echo -n "<a id=\"next\" href=\"${URIENCODE}\">&gt;&gt;</a>"
 	else
-	    echo "&gt;&gt;</p>"
+	    echo -n "&gt;&gt;"
 	fi
 	echo "</p>"
 	uriencode "../$FILE"
