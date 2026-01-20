@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# photogallery - simple static photogallery script
+# photogallery - simple selfcontained static photogallery script
 #
 # Copyright (C) 2007-2026  Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2 or later
@@ -19,53 +19,61 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#
-# usage:
-#    photogallery [gallerytitle]
-#
-# Run this script inside a directory with pictures.
-# It will generate a subfolder (set via $SUBDIR) with some thumbnails
-# and an HTML index file (set via $INDEX).
-# The gallery title is optional and defaults to the current directory
-# name.
-# To describe a gallery, put a file named README into the directory.
-# It will be included in the generated HTML index file.
-# To describe an image some.jpeg, put a file named some.jpeg.text into
-# the same directory (see 'editcomments' script).
-# 
-# Already existing thumbnails will not be overwritten.  If you change
-# the thumbnail sizes ($MEDIUM and $SMALL) you need to remove the
-# thumbnail subfolder before you can run photogallery again.
-#
-# Basic CSS support is available:
-# The environment variables $GALLERYCSS and $THUMBCSS are evaluated
-# and directly included in the generated HTML files.  Tag IDs are
-# #nav, #pic, #sig and #txt.  In a gallery, you can also set img.txt
-# and img.notxt to distinguish pictures with comments from those
-# without.
-#
-# Example:
-# GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
-#
-# Use -d or -l to select default values for dark or light css.
-#
-# To generate lots of galleries in subdirectories use this (only
-# works if there are no line breaks in your directory names):
-# 
-#   find . -depth \! -name .\* -type d | \
-#   while read DIR; do ( echo "$DIR"; cd "$DIR"; photogallery ) ; done
-#
-# If you want to browse your galleries directly from your filesystem
-# without a webserver, you have to run this twice so that all links
-# are generated properly!
-#
-#
 # External commands needed:
-#    convert from Imagemagick
-#    dcraw (only if you want to convert RAW files)
-#    mplayer (for conversion of videos)
-#    sed
-#
+#    - convert(1) from ImageMagick
+#    - dcraw(1) (only if you want to convert RAW files)
+#    - mplayer(1) (for conversion of videos)
+#    - sed(1)
+
+IFS='' read -r -d '' SHORTHELP << EOF
+Usage: photogallery [ OPTION... ] [ gallerytitle ]
+Generate a simple image gallery.
+
+OPTIONs:
+  -h, --help       show this help
+  -v, --version    show version number
+  -d, --dark       use default dark CSS
+  -l, --light      use defaull light CSS
+EOF
+
+IFS='' read -r -d '' LONGHELP << EOF
+Run this script inside a directory with pictures.
+It will generate a subfolder \`%%SUBDIR%%' with some thumbnails
+and an HTML index file named \`%%INDEX%%'.
+The gallery title is optional and defaults to the current directory
+name.
+To describe a gallery, put a file named README into the directory.
+It will be included in the generated HTML index file.
+To describe an image some.jpeg, put a file named some.jpeg.text into
+the same directory (see \`editcomments' script).
+
+Already existing thumbnails will not be overwritten.
+
+Basic CSS support is available:
+The environment variables \$GALLERYCSS and \$THUMBCSS are evaluated
+and directly included in the generated HTML files.  Tag IDs are
+#nav, #pic, #sig and #txt.  In a gallery, you can also set img.txt
+and img.notxt to distinguish pictures with comments from those
+without.
+
+Example:
+GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
+
+Use -d or -l to select default values for dark or light css.
+
+To generate lots of galleries in subdirectories use this (only
+works if there are no line breaks in your directory names):
+
+  find . -depth \! -name .\* -type d | \\
+  while read DIR; do ( echo "\$DIR"; cd "\$DIR"; photogallery ) ; done
+
+If you want to browse your galleries directly from your filesystem
+without a webserver, you have to run this twice so that all links
+are generated properly!
+
+To change some of the defaults, edit the \`photogallery' script.
+Instructions are at the top of the file.
+EOF
 
 #### configuration
 
@@ -157,8 +165,6 @@ html_foot() {
 
 #### main script
 
-
-
 # version number
 if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
     echo "photogallery (version ${VERSION})"
@@ -167,54 +173,8 @@ fi
 
 # help text
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-    echo "Usage: photogallery [ OPTION... ] [ gallerytitle ]"
-    echo "Generate a simple image gallery."
-    echo ""
-    echo "OPTIONs:"
-    echo "  -h, --help       show this help "
-    echo "  -v, --version    show version number"
-    echo "  -d, --dark       use default dark CSS"
-    echo "  -l, --light      use defaull light CSS"
-    cat <<EOF
-
-Run this script inside a directory with pictures.
-It will generate a subfolder \`$SUBDIR' with some thumbnails
-and an HTML index file named \`$INDEX'.
-The gallery title is optional and defaults to the current directory
-name.
-To describe a gallery, put a file named README into the directory.
-It will be included in the generated HTML index file.
-To describe an image some.jpeg, put a file named some.jpeg.text into
-the same directory (see \`editcomments' script).
- 
-Already existing thumbnails will not be overwritten.
-
-Basic CSS support is available:
-The environment variables \$GALLERYCSS and \$THUMBCSS are evaluated
-and directly included in the generated HTML files.  Tag IDs are
-#nav, #pic, #sig and #txt.  In a gallery, you can also set img.txt
-and img.notxt to distinguish pictures with comments from those
-without.
-
-Example:
-GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
-
-Use -d or -l to select default values for dark or light css.
-
-To generate lots of galleries in subdirectories use this (only
-works if there are no line breaks in your directory names):
-
-  find . -depth \! -name .\* -type d | \\
-  while read DIR; do ( echo "\$DIR"; cd "\$DIR"; photogallery ) ; done
-
-If you want to browse your galleries directly from your filesystem
-without a webserver, you have to run this twice so that all links
-are generated properly!
-
-To change some of the defaults, edit the \`photogallery' script.
-Instructions are at the top of the file.
-EOF
-
+    echo "$SHORTHELP"
+    echo "$LONGHELP"
     exit 1
 fi
 
