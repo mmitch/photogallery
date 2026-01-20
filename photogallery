@@ -296,11 +296,11 @@ for (( IDX=0; IDX < ${#FILES[*]}; IDX++ )) ; do
     if [ ! -s "$SUBDIR/$M_FILE" ] ; then
 	case "$EXT" in
 	    
-	    gif|jpeg|jpg|JPG|png|tif|tiff)
+	    gif|jpeg|jpg|JPG|png|tif|tiff|webp)
 		convert -resize $MEDIUM -sharpen 1x0.5 "${FILE}[0]" "$SUBDIR/$M_FILE"
 		;;
 
-	    mpg|mpeg|mov|MOV)
+	    mpg|mpeg|mov|MOV|webm|mp4|avi)
 		TMPDIR=$(mktemp -d -p.) || exit 1
 		mplayer -vo jpeg:outdir="$TMPDIR" -ao null -zoom -frames 1 "${FILE}" >/dev/null 2>&1
 		convert -resize $MEDIUM -sharpen 1x0.5 "${TMPDIR}/00000001.jpg" "$SUBDIR/$M_FILE"
