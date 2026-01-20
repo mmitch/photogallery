@@ -2,7 +2,7 @@
 #
 # exif2text - add exif tags to photogallery gallery
 #
-# Copyright (C) 2008,2009  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2008-2026  Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2 or later
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 VERSION=git
 
 # version number
-if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
     echo "exif2text (version ${VERSION})"
     exit 1
 fi
 
 # help text
-if [ "${*}" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
+if [ -z "${*}" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
     echo "Usage: exif2text [ -v | --version | -h | --help ] FILE..."
     echo "Add exif tags to photogallery gallery comments."
     echo "  -h, --help       show this help "
@@ -40,7 +40,7 @@ for FILE in "${@}"; do
 
     exiftool -q -s -s -FocalLength -ApertureValue -ExposureTime -ISO "${FILE}" | 
     (
-	while read KEY VAL; do
+	while read -r KEY VAL; do
 	    [ "${KEY}" = 'FocalLength:'   ] && F="${VAL}"
 	    [ "${KEY}" = 'ApertureValue:' ] && A="${VAL}"
 	    [ "${KEY}" = 'ExposureTime:'  ] && E="${VAL}"

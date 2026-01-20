@@ -121,7 +121,7 @@ uriencode()
     INPUT="$1"
     LANG=C
 
-    for (( POS=0 ; ${POS} < ${#INPUT} ; POS=(( ${POS} + 1)) )); do
+    for (( POS=0 ; POS < ${#INPUT} ; POS++ )); do
 	CHAR="${INPUT:$POS:1}"
 	case "${CHAR}" in
 	    [0-9a-zA-Z\(\)\'*~\\!./_-])
@@ -144,7 +144,7 @@ html_head() {
     echo "<title>$TITLE</title>"
     if [ "$CSS" ] ; then
 	echo '<style type="text/css"><!--'
-	echo $CSS
+	echo "$CSS"
 	echo '--></style>'
     fi
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=${CHARSET}\" />"
@@ -160,13 +160,13 @@ html_foot() {
 
 
 # version number
-if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
     echo "photogallery (version ${VERSION})"
     exit 1
 fi
 
 # help text
-if [ "$1" = "-h" -o "$1" = "--help" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
     echo "Usage: photogallery [ OPTION... ] [ gallerytitle ]"
     echo "Generate a simple image gallery."
     echo ""
@@ -267,7 +267,7 @@ for DIR in *; do
     echo -n "<a href=\"${URIENCODE}\">$DIR/</a>"
 
     status -n :
-    let SUBDIRS++
+    (( ++SUBDIRS ))
 
 done
 echo '</p>'
@@ -315,7 +315,7 @@ done
 
 status -n "${#FILES[*]}>"
 
-for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
+for (( IDX=0; IDX < ${#FILES[*]}; IDX++ )) ; do
 
     FILE="${FILES[${IDX}]}"
 
@@ -399,8 +399,8 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	html_head "$THUMBCSS"
 	echo '<body onLoad="document.getElementById('"'next'"').focus();">'
 	echo -n "<p id=\"nav\">"
-	PREV=$(( $IDX - 1 ))
-	NEXT=$(( $IDX + 1 ))
+	PREV=$(( IDX - 1 ))
+	NEXT=$(( IDX + 1 ))
 	if [ $IDX -gt 0 ] ; then
 	    uriencode "${FILES[${PREV}]}_m.html"
 	    echo -n "<a href=\"${URIENCODE}\">&lt;&lt;</a>"
@@ -433,8 +433,8 @@ for (( IDX=0; $IDX < ${#FILES[*]}; IDX+=1 )) ; do
 	
     ) > "$SUBDIR/$M_INDEX"
 
-    if [ $(( $IDX % 10 )) == 9 ]; then
-	status -n $(( $IDX + 1 ))
+    if [ $(( IDX % 10 )) == 9 ]; then
+	status -n $(( IDX + 1 ))
     else
 	status -n .
     fi
@@ -443,9 +443,9 @@ done
 
 echo '</p>'
 echo '<!--'
-echo PICTURES=${#FILES[*]}
-echo SUBDIRS=$SUBDIRS
-echo DATE=`date +%Y%m%d%H%M%S`
+echo "PICTURES=${#FILES[*]}"
+echo "SUBDIRS=$SUBDIRS"
+echo "DATE=$(date +%Y%m%d%H%M%S)"
 echo '-->'
 
 html_foot

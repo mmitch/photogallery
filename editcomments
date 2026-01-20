@@ -2,7 +2,7 @@
 #
 # editcomments - edit comments in photogallery gallery
 #
-# Copyright (C) 2008,2009  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2008-2026  Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2 or later
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ TEMP1=$(mktemp)
 TEMP2=$(mktemp)
 
 # version number
-if [ "$1" = "-v" -o "$1" = "--version" ] ; then
+if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
     echo "editcomments (version ${VERSION})"
     exit 1
 fi
 
 # help text
-if [ "${*}" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
+if [ -z "${*}" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
     echo "Usage: editcomments [ -v | --version | -h | --help ] FILE..."
     echo "Edit image comments for photogallery galleries."
     echo "  -h, --help       show this help "
@@ -44,36 +44,36 @@ for FILE in "${@}"; do
 	echo "====$FILE"
 	[ -e "$FILE.text" ] && cat "$FILE.text"
     fi
-done > $TEMP1
+done > "$TEMP1"
 
 # edit list
-if [ ! -s $TEMP1 ] ; then
+if [ ! -s "$TEMP1" ] ; then
     echo "no files found"
     exit 1
 fi
-$EDITOR $TEMP1
+"$EDITOR" "$TEMP1"
 
 # add end mark
-echo "====" >> $TEMP1
+echo "====" >> "$TEMP1"
 
 # split list into files
-touch $TEMP2
-while read LINE ; do
+touch "$TEMP2"
+while read -r LINE ; do
 
         if [ "${LINE:0:4}" = '====' ] ; then
 	    rm -f "$FILENAME"
-	    [ -s $TEMP2 ] && mv $TEMP2 "$FILENAME"
-	    touch $TEMP2
+	    [ -s "$TEMP2" ] && mv "$TEMP2" "$FILENAME"
+	    touch "$TEMP2"
 		
 	    FILENAME="${LINE:4}"
-	    if [ ! -e "${FILENAME}" -a "$FILENAME" ] ; then
+	    if [ ! -e "${FILENAME}" ] && [ "$FILENAME" ] ; then
 		echo "skipping file $FILENAME: does not exist"
 	    fi
 	    FILENAME="${FILENAME}.text"
 	else
-	    echo $LINE >> $TEMP2
+	    echo "$LINE" >> "$TEMP2"
 	fi
 
-done < $TEMP1
+done < "$TEMP1"
 
-rm $TEMP1 $TEMP2
+rm "$TEMP1" "$TEMP2"
