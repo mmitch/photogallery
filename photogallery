@@ -30,7 +30,8 @@ Usage: photogallery [ OPTION... ] [ gallerytitle ]
 Generate a simple image gallery.
 
 OPTIONs:
-  -h, --help       show this help
+  -h, --help       show usage
+  -H, --longhelp   show extended help
   -v, --version    show version number
   -d, --dark       use default dark CSS
   -l, --light      use defaull light CSS
@@ -178,6 +179,11 @@ for ARG in "$@"; do
 
 	# help text
 	-h|--help)
+	    echo "$SHORTHELP"
+	    exit 0
+	    ;;
+	
+	-H|--longhelp)
 	    echo "$SHORTHELP"
 	    echo "$LONGHELP"
 	    exit 0
