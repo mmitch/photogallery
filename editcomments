@@ -20,8 +20,6 @@
 #
 
 VERSION=git
-TEMP1=$(mktemp)
-TEMP2=$(mktemp)
 
 # version number
 if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
@@ -37,6 +35,11 @@ if [ -z "${*}" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
     echo "  -v, --version    show version number"
     exit 1
 fi
+
+# initialize temporary files
+TEMP1=$(mktemp)
+TEMP2=$(mktemp)
+trap "rm '$TEMP1' '$TEMP2'" EXIT
 
 # collect files and comments
 for FILE in "${@}"; do
@@ -75,5 +78,3 @@ while read -r LINE ; do
 	fi
 
 done < "$TEMP1"
-
-rm "$TEMP1" "$TEMP2"
