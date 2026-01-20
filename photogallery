@@ -2,7 +2,7 @@
 #
 # photogallery - simple static photogallery script
 #
-# Copyright (C) 2007,2008,2009  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2007-2026  Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2 or later
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -47,6 +47,8 @@
 # Example:
 # GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
 #
+# Use -d or -l to select default values for dark or light css.
+#
 # To generate lots of galleries in subdirectories use this (only
 # works if there are no line breaks in your directory names):
 # 
@@ -65,10 +67,6 @@
 #    sed
 #
 
-#### commandline parameters
-
-TITLE=${1:-${PWD##*/}}
-
 #### configuration
 
 CHARSET=UTF-8
@@ -79,6 +77,37 @@ SUBDIR=.webthumbs
 INDEX=index.html
 
 VERSION=1.30+git
+
+#### css defaults
+
+FOLDER_ICON_DATA="data:image/png;base64,\
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAMAgMAAAAWidUSAAAADFBMVEXXCAj//wz///8AAADs2EAs\
+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfY\
+BhEUKReJ5uA4AAAAHXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBUaGUgR0lNUO9kJW4AAAAhSURB\
+VAjXY+D/z8DAYLXqAAOD/f//fxiuhoaGE0OAFAMAqAYX1VxCxV4AAAAASUVORK5CYII="
+
+GALLERYCSS_LIGHT="#nav>a{padding-left:20px;background:url(${FOLDER_ICON_DATA})
+center left no-repeat;}
+#txt,#sig{float:right;}
+#pic{clear:left;}
+#nav{float:left;}
+img{margin:0.5em;box-shadow: 0.2em 0.2em 0.3em gray;border-radius: 0.1em;}
+img.txt{border-bottom:solid royalblue 0.3em;}"
+
+THUMBCSS_LIGHT=""
+
+GALLERYCSS_DARK="#nav>a{padding-left:20px;background:url(${FOLDER_ICON_DATA})
+center left no-repeat;}
+#txt,#sig{float:right;}\
+#pic{clear:left;}\
+#nav{float:left;}\
+img{margin:0.5em;box-shadow: 0.2em 0.2em 0.3em #000;border-radius: 0.1em;}\
+img.txt{border-bottom:solid #99f 0.3em;}
+html{background-color:#222;color:#ddd;}
+a{color:#99f;}"
+
+THUMBCSS_DARK="html{background-color:#222;color:#ddd;}
+a{color:#99f;}"
 
 #### function declarations
 
@@ -138,10 +167,14 @@ fi
 
 # help text
 if [ "$1" = "-h" -o "$1" = "--help" ] ; then
-    echo "Usage: photogallery [ -v | --version | -h | --help ] [gallerytitle]"
+    echo "Usage: photogallery [ OPTION... ] [ gallerytitle ]"
     echo "Generate a simple image gallery."
+    echo ""
+    echo "OPTIONs:"
     echo "  -h, --help       show this help "
     echo "  -v, --version    show version number"
+    echo "  -d, --dark       use default dark CSS"
+    echo "  -l, --light      use defaull light CSS"
     cat <<EOF
 
 Run this script inside a directory with pictures.
@@ -166,6 +199,8 @@ without.
 Example:
 GALLERYCSS="#txt,#sig{float:right;}#pic{clear:left;}#nav{float:left;}"
 
+Use -d or -l to select default values for dark or light css.
+
 To generate lots of galleries in subdirectories use this (only
 works if there are no line breaks in your directory names):
 
@@ -183,7 +218,26 @@ EOF
     exit 1
 fi
 
+# default css parameters
+for ARG in "$@"; do
+    case $ARG in
+	-d|--dark)
+	    shift 1
+	    GALLERYCSS=$GALLERYCSS_DARK
+	    THUMBCSS=$THUMBCSS_DARK
+	    ;;
 
+	-l|--light)
+	    shift 1
+	    GALLERYCSS=$GALLERYCSS_LIGHT
+	    THUMBCSS=$THUMBCSS_LIGHT
+	    ;;
+    esac
+done
+
+TITLE=${1:-${PWD##*/}}
+
+# start generation
 
 exec > $INDEX
 
