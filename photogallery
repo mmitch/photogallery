@@ -168,14 +168,14 @@ html_foot() {
 # version number
 if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
     echo "photogallery (version ${VERSION})"
-    exit 1
+    exit 0
 fi
 
 # help text
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
     echo "$SHORTHELP"
     echo "$LONGHELP"
-    exit 1
+    exit 0
 fi
 
 # default css parameters
