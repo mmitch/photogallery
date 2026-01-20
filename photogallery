@@ -165,22 +165,25 @@ html_foot() {
 
 #### main script
 
-# version number
-if [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
-    echo "photogallery (version ${VERSION})"
-    exit 0
-fi
+# argument parsing
 
-# help text
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-    echo "$SHORTHELP"
-    echo "$LONGHELP"
-    exit 0
-fi
-
-# default css parameters
 for ARG in "$@"; do
     case $ARG in
+	
+	# version number
+	-v|--version)
+	    echo "photogallery (version ${VERSION})"
+	    exit 0
+	    ;;
+
+	# help text
+	-h|--help)
+	    echo "$SHORTHELP"
+	    echo "$LONGHELP"
+	    exit 0
+	    ;;
+	
+	# default css parameters
 	-d|--dark)
 	    shift 1
 	    GALLERYCSS=$GALLERYCSS_DARK
