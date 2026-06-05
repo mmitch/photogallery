@@ -70,11 +70,11 @@ date() {
 
     case $1 in
 	+*)
-	    command date "$1" "$the_date"
+	    command date "$1" "$the_date" --utc
 	    ;;
 
 	"")
-	    command date "$the_date"
+	    command date "$the_date" --utc
 	    ;;
 
 	*)
