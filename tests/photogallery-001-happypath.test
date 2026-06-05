@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# photogallery-001-happypath - part of the test infrastructore of the photogallery proiect
+#
+# Copyright (C) 2026  Christian Garbs <mitch@cgarbs.de>
+# licensed under GNU GPL v2 or later
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+source test-framework
+
+test_start photogallery-001-happypath
+
+### GIVEN
+
+cp pics/*.jpg "$tmpdir"
+echo 'gallery description' >  "$tmpdir"/README
+echo 'descriptive text' > "$tmpdir"/green.jpg.text
+
+### WHEN
+
+cd "$tmpdir"
+"$repodir/photogallery" --dark "Gallery title"
+
+### THEN
+
+assert_file_exists index.html
+assert_file_content_equals index.html "$expectdir"/index.html
+
+for pic in blue.jpg green.jpg red.jpg; do
+    
+    assert_file_exists $pic
+    assert_file_exists .webthumbs/${pic}_m.jpg
+    assert_file_exists .webthumbs/${pic}_s.jpg
+
+    assert_file_exists .webthumbs/${pic}_m.html
+    assert_file_content_equals .webthumbs/${pic}_m.html "$expectdir"/${pic}_m.html
+
+done
+
+test_end

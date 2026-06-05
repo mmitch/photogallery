@@ -1,6 +1,6 @@
 # This Makefile is part of photogallery.
 #
-# Copyright (C) 2008,2009  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2008-2026  Christian Garbs <mitch@cgarbs.de>
 # licensed under GNU GPL v2 or later
 #
 #    photogallery is free software: you can redistribute it and/or modify
@@ -46,3 +46,7 @@ dist:	clean
 clean:
 	rm -rf $(DIR) $(TGZ)
 	rm -rf *~
+	rm -rf tests/*~
+
+test:
+	cd tests && ./run-all-tests.sh

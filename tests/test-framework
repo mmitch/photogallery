@@ -1,0 +1,109 @@
+#!/bin/bash
+#
+# test-framework - part of the test infrastructore of the photogallery proiect
+#
+# Copyright (C) 2026  Christian Garbs <mitch@cgarbs.de>
+# licensed under GNU GPL v2 or later
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+handle_exit() {
+    if [[ -d $tmpdir ]]; then
+	cat >&2 <<EOF
+
+test $testname unsuccessful: script failed or was interrupted
+
+for further analysis, the temporary directory has been kept
+see '$tmpdir' for details
+EOF
+    else
+	: $tmpdir was already removed, this looks like a clean exit
+    fi
+}
+
+test_start() {
+    set -e
+
+    testname=$1
+
+    tmpdir=$(mktemp --tmpdir -d photogallery-test-XXXXXX)
+
+    trap handle_exit EXIT
+
+    repodir=$(readlink -e ..)
+    expectdir=$(readlink -e "$testname.expect")
+
+    export LC_ALL=C
+    
+    echo "starting test $testname"
+}
+
+test_end() {
+    # success, remove tmpdir
+    rm -rf "$tmpdir"
+
+    echo "test $testname successful"
+}
+
+die() {
+    echo "$@" >&2
+    exit 1
+}
+export -f die
+
+# MOCKS
+
+date() {
+    the_date=--date=@1780690280
+
+    case $1 in
+	+*)
+	    command date "$1" "$the_date"
+	    ;;
+
+	"")
+	    command date "$the_date"
+	    ;;
+
+	*)
+	    die "unknown parameters '$*' in mocked date call"
+	    ;;
+    esac
+}
+export -f date
+
+# ASSERTIONS
+
+assert_file_exists() {
+    local file=$1
+
+    if [[ -e "$file" ]]; then
+	echo "file '$file' exists like expected"
+    else
+	die "file '$file' does not exist"
+    fi
+}
+
+assert_file_content_equals() {
+    local actualfile=$1 expectedfile=$2
+
+    if cmp --quiet "$actualfile" "$expectedfile"; then
+	echo "file '$actualfile' has expected content"
+    else
+	echo "file '$actualfile' has unexpected content:"
+	diff -Narup "$actualfile" "$expectedfile"
+	die
+    fi
+}
